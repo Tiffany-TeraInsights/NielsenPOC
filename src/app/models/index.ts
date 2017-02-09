@@ -7,7 +7,6 @@ import * as config from 'config';
 
 import { TodosSchema } from './Todos';
 import { UsersSchema } from './Users';
-import { KeysSchema } from './Keys';
 
 var configDB: any = config.get("database");
 
@@ -19,7 +18,6 @@ export { TodosSchema } from './Todos';
 export var Todos = new TodosSchema(sequelize);
 export { UsersSchema} from './Users';
 export var Users = new UsersSchema(sequelize);
-// not a real schema
-export var Keys = new KeysSchema();
+
 // connect schemas
 Todos.connectUsers(Users.getModel());

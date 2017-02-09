@@ -19,24 +19,15 @@ module todos {
         // Skip past signup phases
         login(username: string, password: string) {
             var that = this;
-            this.Auth.preLogin(username, password)
-                .then((rep) => {
-                    that.URL = that.$sce.trustAsResourceUrl(rep.authUrl);
-                    console.log("Signup: ", rep);
-                    that.$state.go("login.2q2r");
-                    that.Auth.login()
-                        .then(() => {
-                            console.log("Logged in");
-                            that.$state.go("todos");
-                            that.Notify.info('Login Successful');
-                        }, (error) => {
-                            console.log("Logged failed: ", error);
-                            that.$state.go("login");
-                            that.Notify.error('Login Failed. ' + error.statusText);
-                        });
+            that.Auth.login(username,password)
+                .then(() => {
+                    console.log("Logged in");
+                    that.$state.go("todos");
+                    that.Notify.info('Login Successful');
                 }, (error) => {
-                    console.log(error);
-                    this.Notify.error("Login failed. Reason: " + error.statusText);
+                    console.log("Logged failed: ", error);
+                    that.$state.go("login");
+                    that.Notify.error('Login Failed. ' + error.statusText);
                 });
         }
 

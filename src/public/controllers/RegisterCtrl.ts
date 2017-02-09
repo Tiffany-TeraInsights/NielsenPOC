@@ -10,26 +10,19 @@ module todos {
         private challengeInfo: any;
 
         signup(username: string, password: string) {
-            var that = this;
-            this.Auth.preRegister(username, password)
-                .then((rep: any) => {
-                    that.challengeInfo = rep;
-                    that.URL = that.$sce.trustAsResourceUrl(rep.registerUrl);
-                    that.$state.go("register.2q2r");
 
-                    // finish the registration
-                    this.Auth.register()
-                        .then(() => {
-                            that.$state.go("register.return");
-                            that.Notify.info('Registration Successful');
-                        }, () => {
-                            that.$state.go("register");
-                            that.Notify.error('Registration Failed');
-                        });
-                }, (err) => {
-                    console.log("Sign up failed: ", err);
-                    that.Notify.error("Registration Failed. " + err.data);
+            this.Auth.register(username, password)
+                .then(() => {
+                    this.$state.go("register.return");
+                    this.Notify.info('Registration Successful');
+                }, () => {
+                    this.$state.go("register");
+                    this.Notify.error('Registration Failed');
                 });
+            (err) => {
+                console.log("Sign up failed: ", err);
+                this.Notify.error("Registration Failed. " + err.data);
+            };
         }
         static $inject = ['$sce', 'Notify', 'Auth', '$state'];
 

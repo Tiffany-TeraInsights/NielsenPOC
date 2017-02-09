@@ -11,7 +11,7 @@ import * as config from 'config';
 import * as staticRoutes from './routes/static';
 import * as authRoutes from './routes/auth';
 import * as todosRoutes from './routes/todos';
-import * as deviceRoutes from './routes/devices';
+
 import {sequelize} from './models';
 
 // Set up express and Socket.IO
@@ -24,15 +24,6 @@ function primaryFactorIn(req: express.Request, res: express.Response, next: Func
         next();
     } else {
         res.status(401).send("Must be logged in to use this route.");
-    }
-}
-
-// Second factor verifier
-function secondFactorIn(req: express.Request, res: express.Response, next: Function) {
-    if (req.session["secondFactor"] === '2Q2R') {
-        next();
-    } else {
-        res.status(401).send("This route requires second factor authentication");
     }
 }
 
@@ -68,21 +59,20 @@ app.use(express.static('public'));
 // Express static routes
 app.route('/').get(staticRoutes.index);
 
-app.route('/preregister/:userID').get(authRoutes.preRegister);
+
 app.route('/register').post(authRoutes.register);
 
-app.route('/prelogin').post(passport.authenticate('local'), authRoutes.prelogin);
 app.route('/login').post(primaryFactorIn, passport.authenticate('localapikey', { session: false }), authRoutes.login);
 app.route('/logout').get(primaryFactorIn, authRoutes.logout);
 
-app.route('/device/add').get(primaryFactorIn, secondFactorIn, deviceRoutes.addDevice);
-app.route('/device/delete').get(primaryFactorIn, secondFactorIn, deviceRoutes.removeDevice);
+
+
 
 // Todos CRUD routes. Require full session
-app.route('/todo').get(primaryFactorIn, secondFactorIn, todosRoutes.get); // all of user's todos
-app.route('/todo').post(primaryFactorIn, secondFactorIn, todosRoutes.create);
-app.route('/todo/:id').put(primaryFactorIn, secondFactorIn, todosRoutes.update);
-app.route('/todo/:id').delete(primaryFactorIn, secondFactorIn, todosRoutes.remove);
+app.route('/todo').get(primaryFactorIn, todosRoutes.get); // all of user's todos
+app.route('/todo').post(primaryFactorIn, todosRoutes.create);
+app.route('/todo/:id').put(primaryFactorIn, todosRoutes.update);
+app.route('/todo/:id').delete(primaryFactorIn, todosRoutes.remove);
 
 // This is critical. Without it, the schema is not created
 sequelize.sync();

@@ -23,43 +23,6 @@ module todos {
             this.openModal = false;
         }
 
-        addDeviceDialog() {
-            var that = this;
-            this.$http.get('/device/add')
-                .then((rep: any) => {
-                    that.URL = that.$sce.trustAsResourceUrl(rep.data.registerUrl);
-                    that.openModal = true;
-
-                    that.$http.get(rep.data.waitUrl)
-                        .then(() => {
-                            that.accept("Device added successfully.");
-                        },
-                        () => {
-                            that.cancel("Device adding failed.")
-                        })
-                }, (error) => {
-                    that.cancel('Add device failed. ' + error.statusText);
-                });
-        }
-
-        deleteDeviceDialog() {
-            var that = this;
-            this.$http.get('/device/delete')
-                .then((rep: any) => {
-                    that.URL = that.$sce.trustAsResourceUrl(rep.data.deleteUrl);
-                    that.openModal = true;
-
-                    that.$http.get(rep.data.waitUrl)
-                        .then(() => {
-                            that.accept("Device deleted successfully.");
-                        },
-                        () => {
-                            that.cancel("Device deletion failed.")
-                        })
-                }, (error) => {
-                    that.cancel('Delete device failed. ' + error.statusText);
-                });
-        }
 
         deleteAccountDialog() {
             // TODO.
@@ -86,7 +49,7 @@ module todos {
 
         removeTodo(todo) {
             var $index = -1;
-            this.todos.forEach( (t, i, a) => {
+            this.todos.forEach((t, i, a) => {
                 if (t.id == todo.id)
                     $index = i;
             });

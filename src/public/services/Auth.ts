@@ -39,22 +39,14 @@ module todos {
         }
 
         /**
-         * Get the available user keys. Only works if we are preLoggedin 
-         * 
-         * @returns
-         */
-        getKeys() {
-            return this.$http.get('/keys')
-                .then((rep: any) => { return rep.data; });
-        }
-
-        /**
-         * Method to get a pre-session so we can complete the login with 2FA 
+         * Main login. By now, we have selected a key and we have a challenge.
          * 
          * @param {string} email
-         * @param {string} password
-         * @returns Promise<string>
+         * @param {string} challenge
+         * @param {string} keyID
+         * @returns
          */
+
         preLogin(username: string, password: string) {
             var self = this;
             this.user = username;
@@ -67,24 +59,18 @@ module todos {
             });
         }
 
-        /**
-         * Main login. By now, we have selected a key and we have a challenge.
-         * 
-         * @param {string} email
-         * @param {string} challenge
-         * @param {string} keyID
-         * @returns
-         */
-        login() {
-            var self = this;
-            return self.$http.post('/login', {
-                username: self.user,
-                request: self.request
+        login(username: string, password: string){
+            this.user = username;
+            this.regPasswd = password;
+            this.loggedIn = true;
+            return this.$http.post('/login', {
+                username: this.user,
+                request: this.request
             }).then((data: Object) => {
-                self.user = <string>data['data'];
-                self.loggedIn = true;
-                return;
-            })
+                    this.user = <string>data['data'];
+                    this.loggedIn = true;
+                    return data;
+                });
         }
 
         /**
@@ -93,10 +79,9 @@ module todos {
          * @returns
          */
         logout() {
-            var self = this;
-            return self.$http.get('/logout')
+            return this.$http.get('/logout')
                 .then(() => {
-                    self.loggedIn = false;
+                    this.loggedIn = false;
                 });
         }
 
@@ -120,17 +105,19 @@ module todos {
                 });
         }
 
-        register() {
+        register(username: string, password: string) {
             var that = this;
+            this.regPasswd = password;
+            this.user = username;
             console.log("State: ", that);
             return this.$http.post('/register',
                 {
-                    userID: that.user,
-                    password: that.regPasswd,
-                    request: that.request
+                    userID: this.user,
+                    password: this.regPasswd,
+                    request: this.request
                 }).then(
                 (rep: any) => {
-                    return "User " + that.user + " registerred";
+                    return "User " + that.user + " registered";
                 }
                 )
         }
