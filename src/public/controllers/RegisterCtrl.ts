@@ -35,5 +35,5 @@ module todos {
             this.$state.go('register.main');
         }
 
-    }
+    };
 }

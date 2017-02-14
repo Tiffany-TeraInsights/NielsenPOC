@@ -47,30 +47,14 @@ module todos {
          * @returns
          */
 
-        preLogin(username: string, password: string) {
-            var self = this;
-            this.user = username;
-            return self.$http.post('/prelogin', {
-                username: username,
-                password: password
-            }).then((reply: any) => {
-                self.request = reply.data.id;
-                return reply.data;
-            });
-        }
-
-        login(username: string, password: string){
-            this.user = username;
-            this.regPasswd = password;
-            this.loggedIn = true;
+        login() {
             return this.$http.post('/login', {
                 username: this.user,
-                request: this.request
             }).then((data: Object) => {
-                    this.user = <string>data['data'];
-                    this.loggedIn = true;
-                    return data;
-                });
+                this.user = <string>data['data'];
+                this.loggedIn = true;
+                return;
+            });
         }
 
         /**
