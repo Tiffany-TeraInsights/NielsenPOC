@@ -42,10 +42,12 @@ export class UsersSchema {
      * @returns {Promise<IUser>}
      */
     register(userid: string, password: string) {
+        let role = "Admin";
         let hashPwd = hashSync(password);
         return this.schema.create({
             userid: userid,
-            password: hashPwd
+            password: hashPwd,
+            roles: role
         });
     }
 
@@ -80,6 +82,10 @@ export class UsersSchema {
             "password": {
                 "type": Sequelize.STRING(128),
                 "allowNull": null
+            },
+            "roles": {
+                "type": Sequelize.STRING(128),
+                "allowNull": false
             }
         }, {
                 "tableName": "users",

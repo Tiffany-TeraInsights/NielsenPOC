@@ -18,7 +18,7 @@ module todos {
 
         // Skip past signup phases
         login(username: string, password: string) {
-            this.Auth.login(username,password)
+            this.Auth.login(username, password)
                 .then((rep) => {
                     console.log("Logged in");
                     this.$state.go("todos");
