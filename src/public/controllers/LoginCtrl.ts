@@ -18,8 +18,8 @@ module todos {
 
         // Skip past signup phases
         login(username: string, password: string) {
-            this.Auth.login()
-                .then(() => {
+            this.Auth.login(username,password)
+                .then((rep) => {
                     console.log("Logged in");
                     this.$state.go("todos");
                     this.Notify.info('Login Successful');
@@ -28,10 +28,6 @@ module todos {
                     this.$state.go("login");
                     this.Notify.error('Login Failed. ' + error.statusText);
                 });
-                (error) => {
-                console.log("Login Failed ", error);
-                this.Notify.error("Login Failed. " + error.data);
-            };
         }
 
         static $inject = ['$sce', 'Notify', 'Auth', '$state'];

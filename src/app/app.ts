@@ -20,6 +20,7 @@ var server = require('http').createServer(app);
 
 // Primary factor verifier
 function primaryFactorIn(req: express.Request, res: express.Response, next: Function) {
+    console.log("Im here");
     if (req.user) { // passport filled in the user
         next();
     } else {
@@ -62,7 +63,7 @@ app.route('/').get(staticRoutes.index);
 
 app.route('/register').post(authRoutes.register);
 
-app.route('/login').post(primaryFactorIn, passport.authenticate('localapikey', { session: false }), authRoutes.login);
+app.route('/login').post(passport.authenticate('local', { session: true }), authRoutes.login);
 app.route('/logout').get(primaryFactorIn, authRoutes.logout);
 
 

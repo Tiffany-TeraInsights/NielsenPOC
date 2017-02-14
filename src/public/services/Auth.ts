@@ -47,9 +47,12 @@ module todos {
          * @returns
          */
 
-        login() {
+        login(username: string, password: string) {
+            this.user = username;
             return this.$http.post('/login', {
-                username: this.user,
+                username: username,
+                password: password,
+                request: this.request
             }).then((data: Object) => {
                 this.user = <string>data['data'];
                 this.loggedIn = true;
@@ -76,18 +79,6 @@ module todos {
          * @param {string} username
          * @param {string} password
          */
-        preRegister(username: string, password: string) {
-            var that = this;
-            this.regPasswd = password;
-            this.user = username;
-            return this.$http.get('/preregister/' + username)
-                .then((rep: any) => {
-                    var reply = rep.data;
-                    that.request = reply.id;
-                    that.waitUrl = reply.waitUrl;
-                    return reply;
-                });
-        }
 
         register(username: string, password: string) {
             var that = this;
@@ -96,12 +87,12 @@ module todos {
             console.log("State: ", that);
             return this.$http.post('/register',
                 {
-                    userID: this.user,
-                    password: this.regPasswd,
+                    userID: username,
+                    password: password,
                     request: this.request
                 }).then(
                 (rep: any) => {
-                    return "User " + that.user + " registered";
+                    return "User " + this.user + " registered";
                 }
                 )
         }
