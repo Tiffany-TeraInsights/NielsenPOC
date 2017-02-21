@@ -13,8 +13,6 @@ module todos {
      * @class LoginCtrl
      */
     export class LoginCtrl {
-        private challengeInfo: any;
-        private URL: string; // the URL we need to render in iframes
 
         // Skip past signup phases
         login(username: string, password: string) {

@@ -1,17 +1,18 @@
 /// <reference path="../services/Todos.ts" />
+//import { ISemesterCourse } from "./../services/Courses";
+/// <reference path="../services/Courses.ts"/>
 /// <reference path="../services/Auth.ts" />
 /// <reference path="../services/Notify.ts" />
 /// <reference path="../../typings/index.d.ts" />
 
-module todos {
+module semester {
     'use strict';
 
-    export class TodoCtrl {
-        private todos: ITodoItem[] = [];
-        private newTodo: string = "";
-        private URL: string; // the iframe URL
+    export class SemesterCtrl {
+        private courses: ISemesterCourse[] = [];
+        //private URL: string; // the iframe URL
         private openModal = false; // controls the modal
-        private Todo: ITodoResource;
+        private Course: ICourseResource;
 
         accept(msg) {
             this.Notify.info(msg);
@@ -38,7 +39,7 @@ module todos {
                 completed: false
             });
             todo.$save();
-            this.todos.push(todo);
+            this.courses.push(todo);
 
             this.newTodo = ""; // reset newTodo
         }
@@ -81,7 +82,7 @@ module todos {
             private $sce: ng.ISCEService,
             TodoSrvc: Todos
         ) {
-            this.Todo = TodoSrvc.resource;
+            this.Course = TodoSrvc.resource;
 
             if (!this.Auth.loggedIn)
                 this.$state.go("login.main");
