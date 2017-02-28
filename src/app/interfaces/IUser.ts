@@ -3,14 +3,14 @@
 import * as Sequelize from 'sequelize';
 
 export interface IUser {
-    userid: string;
-    password: string;
-    roles: string;
+userid: string;
+password: string;
+roles: string;
 }
 
 export interface IUserInstance
-    extends Sequelize.Instance<IUserInstance, IUser>, IUser { }
+extends Sequelize.Instance<IUserInstance,IUser>,IUser { }
 
 
 export interface IUserModel
-    extends Sequelize.Model<IUserInstance, IUser> { }
+extends Sequelize.Model<IUserInstance,IUser> { }

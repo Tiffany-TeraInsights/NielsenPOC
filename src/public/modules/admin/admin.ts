@@ -1,7 +1,9 @@
 
 module admin {
-    'use strict'
+'use strict'
 
-    var admin = angular.module('admin', [])
+var admin=angular.module('admin',['ngAria','ui.materialize',
+'ngResource','ui.router','ct.ui.router.extras',
+'ngMessages','validation.match','ngDropdown','ja.qr'])
 
 }

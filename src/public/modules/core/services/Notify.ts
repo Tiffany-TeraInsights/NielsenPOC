@@ -1,27 +1,27 @@
 /// <reference path="../../../../typings/index.d.ts" />
 
 declare var Materialize: {
-    toast: Function;
+toast: Function;
 }
 
 module core {
-    'use strict';
+'use strict';
 
-    export class Notify {
+export class Notify {
 
-        info(msg: string) {
-            Materialize.toast(msg, 3000);
-        }
+info(msg: string) {
+Materialize.toast(msg,3000);
+}
 
-        error(msg: string) {
-            Materialize.toast(msg, 3000);
-        }
+error(msg: string) {
+Materialize.toast(msg,3000);
+}
 
-        static $inject = [];
+static $inject=[];
 
-        constructor(
-        ) { }
+constructor(
+) { }
 
-    }
+}
 
 }

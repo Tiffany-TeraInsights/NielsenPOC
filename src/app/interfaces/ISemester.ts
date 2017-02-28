@@ -6,15 +6,15 @@ import * as Sequelize from 'sequelize';
 
 
 export interface ISemester {
-    eid: string; // semester ID from UF system
-    name: string; // displayable semester rename
-    courses: ICourse[];
-    admin: IUser;
-    current: boolean;
+eid: string; // semester ID from UF system
+name: string; // displayable semester rename
+courses: ICourse[];
+admin: IUser;
+current: boolean;
 }
 
 export interface ISemesterInstance
-    extends Sequelize.Instance<ISemesterInstance, ISemester>, ISemester { }
+extends Sequelize.Instance<ISemesterInstance,ISemester>,ISemester { }
 
 export interface ISemesterModel
-    extends Sequelize.Model<ISemesterInstance, ISemester> { }
+extends Sequelize.Model<ISemesterInstance,ISemester> { }

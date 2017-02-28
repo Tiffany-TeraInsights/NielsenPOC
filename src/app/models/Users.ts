@@ -4,111 +4,111 @@
 import * as Sequelize from 'sequelize';
 import * as Promise from "bluebird";
 import * as uuid from "node-uuid";
-import {hashSync, compareSync} from "bcryptjs";
+import { hashSync,compareSync } from "bcryptjs";
 
 import * as IUser from '../interfaces/IUser';
 
 var singleton: UsersSchema;
 
 export class UsersSchema {
-    private schema: IUser.IUserModel;
+private schema: IUser.IUserModel;
 
-    /**
-     * Get access to the inner model. 
-     * 
-     * @returns IUser.IUserModel
-     */
-    getModel() {
-        return this.schema;
-    }
+/**
+* Get access to the inner model. 
+* 
+* @returns IUser.IUserModel
+*/
+getModel() {
+return this.schema;
+}
 
-    /**
-     * Access the account ty userid. This is the primary access method 
-     * 
-     * @param {string} userid
-     * @returns
-     */
-    getAccountByUserid(userid: string) {
-        return this.schema.find({
-            where: { userid: userid }
-        });
-    }
+/**
+* Access the account ty userid. This is the primary access method 
+* 
+* @param {string} userid
+* @returns
+*/
+getAccountByUserid(userid: string) {
+return this.schema.find({
+where: { userid: userid }
+});
+}
 
-    /**
-     * Register a new user  
-     * 
-     * @param {string} userid
-     * @param {string} password
-     * @returns {Promise<IUser>}
-     */
-    register(userid: string, password: string) {
-        let role = "Admin";
-        let hashPwd = hashSync(password);
-        return this.schema.create({
-            userid: userid,
-            password: hashPwd,
-            roles: role
-        });
-    }
+/**
+* Register a new user  
+* 
+* @param {string} userid
+* @param {string} password
+* @returns {Promise<IUser>}
+*/
+register(userid: string,password: string) {
+let role="Admin";
+let hashPwd=hashSync(password);
+return this.schema.create({
+userid: userid,
+password: hashPwd,
+roles: role
+});
+}
 
-    checkPasswd(userid: string, password: string) {
-        return this.schema.find({
-            where: { userid: userid }
-        }).then((user: IUser.IUserInstance) => {
-            // console.log("User: ", user);
-            if (!user)
-                throw Error("User not found");
+checkPasswd(userid: string,password: string) {
+return this.schema.find({
+where: { userid: userid }
+}).then((user: IUser.IUserInstance) => {
+// console.log("User: ", user);
+if(!user)
+throw Error("User not found");
 
-            if (compareSync(password, user.password))
-                return user;
-            else
-                throw Error("Incorrect password");
-        })
-    }
+if(compareSync(password,user.password))
+return user;
+else
+throw Error("Incorrect password");
+})
+}
 
-    unregister(userid: string) {
-        return this.schema.destroy({
-            where: { userid: userid }
-        });
-    }
+unregister(userid: string) {
+return this.schema.destroy({
+where: { userid: userid }
+});
+}
 
-    confirmAdmin(userid: string) {
-        return this.schema.find({
-            where: { userid: userid }
-        })
-            .then((user: IUser.IUserInstance) => {
-                if (!user)
-                    throw Error("User not found");
+confirmAdmin(userid: string) {
+return this.schema.find({
+where: { userid: userid }
+})
+.then((user: IUser.IUserInstance) => {
+if(!user)
+throw Error("User not found");
 
-                if (user.roles == 'admin')
-                    return user;
-                else
-                    throw Error("Unauthorized");
-            });
+if(user.roles=='admin')
+return user;
+else
+throw Error("Unauthorized");
+});
 
-    }
+}
 
 
-    constructor(private db: Sequelize.Connection) {
-        this.schema = db.define<IUser.IUserInstance, IUser.IUser>("User", {
-            "userid": {
-                "type": Sequelize.STRING(64),
-                "allowNull": false,
-                "primaryKey": true
-            },
-            "password": {
-                "type": Sequelize.STRING(128),
-                "allowNull": null
-            },
-            "roles": {
-                "type": Sequelize.STRING(128),
-                "allowNull": false
-            }
-        }, {
-                "tableName": "users",
-                "timestamps": true,
-                "createdAt": "created_at",
-                "updatedAt": "updated_at",
-            });
-    }
+constructor(private db: Sequelize.Connection) {
+this.schema=db.define<IUser.IUserInstance,IUser.IUser>("User",{
+"userid": {
+"type": Sequelize.STRING(64),
+"allowNull": false,
+"primaryKey": true
+},
+"password": {
+"type": Sequelize.STRING(128),
+"allowNull": null
+},
+"roles": {
+"type": Sequelize.STRING(128),
+"allowNull": false
+}
+},{
+"tableName": "users",
+"timestamps": true,
+"createdAt": "created_at",
+"updatedAt": "updated_at",
+});
+}
 }
