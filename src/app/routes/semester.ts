@@ -1,48 +1,45 @@
+
 /// <reference path="../../typings/index.d.ts" />
 
-/**
- * This file contains routes for storing user todo lists
- */
-
 import * as express from 'express';
-import {Todos} from '../models';
+import {Semesters} from '../models';
 
-// GET: /todos
+
 export function get(req: express.Request, res: express.Response) {
-    Todos.get(req.user.userid).then(
-        (todos) => {
-            res.json(todos);
+    Semesters.get(req.body.eid).then(
+        (semesters) => {
+            res.json(semesters);
         }, (err) => {
             res.status(404).send(err);
         }
     );
 }
 
-// POST: /todos
 export function create(req: express.Request, res: express.Response) {
-    Todos.create(
+    Semesters.addSemester(
+        req.body.eid,
+        req.body.name,
         req.user.userid,
-        req.body.title,
-        req.body.completed
+        req.body.current
     ).then(
-        (todo) => {
-            res.json(todo);
+        (semesters) => {
+            res.json(semesters);
         }, (err) => {
             res.status(404).send(err);
         }
         );
 }
 
-// PUT: /todos/:id
 export function update(req: express.Request, res: express.Response) {
-    Todos.update(
+    Semesters.updateSemester(
+        req.body.eid,
+        req.body.name,
+        req.body.courses,
         req.user.userid,
-        req.params.id,
-        req.body.title,
-        req.body.completed
+        req.body.current
     ).then(
-        (todo) => {
-            res.json(todo);
+        (courses) => {
+            res.json(courses);
         }, (err) => {
             console.log("Error: ", err);
             res.status(404).send(err);
@@ -50,10 +47,8 @@ export function update(req: express.Request, res: express.Response) {
         );
 }
 
-// DELETE: /todos
 export function remove(req: express.Request, res: express.Response) {
-    Todos.delete(
-        req.user.userid,
+    Semesters.removeSemester(
         req.params.id
     ).then(
         () => {

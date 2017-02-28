@@ -11,6 +11,7 @@ import * as config from 'config';
 import * as staticRoutes from './routes/static';
 import * as authRoutes from './routes/auth';
 import * as todosRoutes from './routes/todos';
+import * as semesterRoutes from './routes/semester';
 
 import {sequelize} from './models';
 
@@ -72,6 +73,7 @@ app.route('/logout').get(primaryFactorIn, authRoutes.logout);
 // Todos CRUD routes. Require full session
 app.route('/todo').get(primaryFactorIn, todosRoutes.get); // all of user's todos
 app.route('/todo').post(primaryFactorIn, todosRoutes.create);
+app.route('/adminMain').get(primaryFactorIn, authRoutes.confirmAdmin, semesterRoutes.get);
 app.route('/todo/:id').put(primaryFactorIn, todosRoutes.update);
 app.route('/todo/:id').delete(primaryFactorIn, todosRoutes.remove);
 

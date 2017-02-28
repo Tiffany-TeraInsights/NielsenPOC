@@ -1,3 +1,5 @@
+import { SemesterSchema } from './Semesters';
+import { CourseSchema } from './Courses';
 /// <reference path="../../typings/index.d.ts" />
 /// <reference path="../interfaces/ITodos.ts" />
 /// <reference path="../interfaces/IUser.ts" />
@@ -18,6 +20,13 @@ export { TodosSchema } from './Todos';
 export var Todos = new TodosSchema(sequelize);
 export { UsersSchema} from './Users';
 export var Users = new UsersSchema(sequelize);
+export { SemesterSchema } from './Semesters';
+export var Semesters = new SemesterSchema(sequelize);
+export { CourseSchema } from './Courses';
+export var Courses = new CourseSchema(sequelize);
+
+
 
 // connect schemas
 Todos.connectUsers(Users.getModel());
+Courses.connectSemesters(Semesters.getModel());

@@ -42,10 +42,12 @@ export class UsersSchema {
      * @returns {Promise<IUser>}
      */
     register(userid: string, password: string) {
+        let role = "Admin";
         let hashPwd = hashSync(password);
         return this.schema.create({
             userid: userid,
-            password: hashPwd
+            password: hashPwd,
+            roles: role
         });
     }
 
@@ -70,6 +72,23 @@ export class UsersSchema {
         });
     }
 
+    confirmAdmin(userid: string) {
+        return this.schema.find({
+            where: { userid: userid }
+        })
+            .then((user: IUser.IUserInstance) => {
+                if (!user)
+                    throw Error("User not found");
+
+                if (user.roles == 'admin')
+                    return user;
+                else
+                    throw Error("Unauthorized");
+            });
+
+    }
+
+
     constructor(private db: Sequelize.Connection) {
         this.schema = db.define<IUser.IUserInstance, IUser.IUser>("User", {
             "userid": {
@@ -80,6 +99,10 @@ export class UsersSchema {
             "password": {
                 "type": Sequelize.STRING(128),
                 "allowNull": null
+            },
+            "roles": {
+                "type": Sequelize.STRING(128),
+                "allowNull": false
             }
         }, {
                 "tableName": "users",

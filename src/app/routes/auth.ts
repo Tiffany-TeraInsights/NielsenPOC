@@ -15,16 +15,6 @@ var unirest = require('unirest');
 
 import { Users } from '../models';
 
-var pending: { [challenge: string]: string } = {}
-
-interface IKeyInfo {
-    type: "2q2r" | "u2f"; // key type
-    name: string; // displayable name 
-}
-
-// Maps from keyID => key description
-type IKeys =
-    { [keyID: string]: IKeyInfo };
 
 // Login challenge
 passport.use(new LocalStrategy(
@@ -76,3 +66,14 @@ export function register(req: express.Request, res: express.Response) {
         });
 
 };
+
+export function confirmAdmin(req: express.Request, res: express.Response) {
+
+    Users.confirmAdmin(req.user.userid)
+        .then(
+        (user) => {
+            res.status(200).send("Authentication successful");
+        }, (err) => {
+            res.status(400).send(err);
+        });
+}
