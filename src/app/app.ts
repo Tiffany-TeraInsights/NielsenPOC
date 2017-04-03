@@ -12,6 +12,7 @@ import * as staticRoutes from './routes/static';
 import * as authRoutes from './routes/auth';
 import * as todosRoutes from './routes/todos';
 import * as semesterRoutes from './routes/semester';
+import * as userRoutes from './routes/users';
 
 import { sequelize } from './models';
 
@@ -46,6 +47,13 @@ secure: sessionCookie.secure // && config.secure.ssl
 store: new Store(sequelize)
 }));
 
+app.use(function(req,res,next) {
+res.header('Access-Control-Allow-Headers','Content-Type');
+res.header('Access-Control-Allow-Methods','GET,POST,PATCH,DELETE');
+res.header('Access-Control-Allow-Origin','*');
+next();
+});
+
 app.use(bodyParser.json());
 
 // Passport requirements
@@ -58,16 +66,20 @@ app.use(morgan('dev'));
 // All other routes are static
 app.use(express.static('public'));
 
+
+app.route('/admin.html').get(staticRoutes.admin);
+app.route('/faculty.html').get(staticRoutes.faculty);
+app.route('/student.html').get(staticRoutes.student);
+
 // Express static routes
 app.route('/').get(staticRoutes.index);
 
 
 app.route('/register').post(authRoutes.register);
 
-app.route('/login').post(passport.authenticate('local',{ session: true }),authRoutes.login);
+app.route('/loginAdmin').post(passport.authenticate('local',{ session: true }),authRoutes.loginAdmin);
+app.route('/loginStudent').post(passport.authenticate('local',{ session: true }),authRoutes.loginStudent);
 app.route('/logout').get(primaryFactorIn,authRoutes.logout);
-
-
 
 
 // Todos CRUD routes. Require full session
@@ -77,6 +89,22 @@ app.route('/adminMain').get(primaryFactorIn,authRoutes.confirmAdmin,semesterRout
 app.route('/todo/:id').put(primaryFactorIn,todosRoutes.update);
 app.route('/todo/:id').delete(primaryFactorIn,todosRoutes.remove);
 
+app.route('/users').get(userRoutes.isAuthorized,userRoutes.list);
+app.route('/users').post(userRoutes.isAdmin,userRoutes.addUser);
+app.route('/users/:userID').put(userRoutes.isAdmin,userRoutes.updateFaculty);
+
+//app.param('id',semesterRoutes.semesterByID);
+//app.route('/semesters').get();
+app.route('/semesters').get(userRoutes.isAdmin,semesterRoutes.list);
+app.route('/semesters').post(userRoutes.isAdmin,semesterRoutes.create);
+
+app.route('/semesters/:id').put(userRoutes.isAdmin,semesterRoutes.update);
+
+app.route('/courses').post(userRoutes.isAdmin,semesterRoutes.createCourse);
+app.route('/courses').get(userRoutes.isAdmin,semesterRoutes.listCourses);
+app.route('/courses/:eid').get(userRoutes.isAdmin,semesterRoutes.listCourses);
+
+//app.route('/studentprofiles').post(userRoutes.addStudentProfile);
 // This is critical. Without it, the schema is not created
 sequelize.sync();
 

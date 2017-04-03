@@ -3,9 +3,12 @@
 import * as Sequelize from 'sequelize';
 
 export interface IUser {
-userid: string;
+firstName: string;
+lastName: string;
+email: string;
 password: string;
 roles: string;
+cid: string;
 }
 
 export interface IUserInstance

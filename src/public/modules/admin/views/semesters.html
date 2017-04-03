@@ -1,0 +1,89 @@
+<md-toolbar class="white-back semester-bar">
+    <div class="md-toolbar-tools white-back">
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Add" ng-click="ctrl2.openAddEditDialog()">
+            <md-icon><i class="fa fa-plus  ui-con"></i></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
+            <md-icon><i class="fa fa-refresh  ui-con" ng-class="{'fa-spin': ctrl2.refreshing}"></i></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content layout="row" class="padding semester-border-container">
+    <md-list flex="20" class="semester-list">
+        <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="sem in ctrl2.semesters">
+            <div class="md-list-item-text" ng-click="ctrl2.select(sem)">
+                <h3>{{sem.name}}</h3>
+                <p>{{sem.eid}}</p>
+            </div>
+            <md-icon ng-if="sem.eid === ctrl2.activeEid" aria-label="Active">
+                <i class="fa fa-check  ui-con green"></i>
+            </md-icon>
+        </md-list-item>
+    </md-list>
+    <md-content class="semester-display" flex="80" ng-show="ctrl2.current" style="margin-left: 10px">
+        <div class="semester-display-wrap">
+            <h1 class="semester-name">{{ctrl2.current.name}}
+                <i class="fa fa-check fa-lg ui-con" ng-if="sem.eid === ctrl2.activeEid"></i></h2>
+                <md-button class="md-icon-button" ng-click="ctrl2.openAddEditDialog(ctrl2.current)" style="bottom: 5px;">
+                    <md-icon aria-label="Edit">
+                        <i class="fa fa-pencil  ui-con"></i>
+                        <md-tooltip md-direction="top" class="large" style="position: absolute;">
+                            Edit
+                        </md-tooltip>
+                    </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="ctrl2.clone(ctrl2.current)" style="bottom: 5px;">
+                    <md-icon aria-label="Clone">
+                        <i class="fa fa-clone  ui-con"></i>
+                    </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="ctrl2.remove(ctrl2.current)" style="bottom: 5px;">
+                    <md-icon aria-label="Delete">
+                        <i class="fa fa-trash  ui-con"></i>
+                    </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="ctrl2.setCurrent(ctrl2.current)" style="bottom: 5px;">
+                    <md-icon aria-label="Active">
+                        <i class="fa fa-check  ui-con" ng-class="{green: sem.eid === ctrl2.activeEid}"></i>
+                    </md-icon>
+                </md-button>
+                <h3 class="semester-id"><br>{{ctrl2.current.eid}}</h3>
+                <div layout="row">
+                    <md-list flex="20" style="max-height: calc(100vh - 210px); overflow-y: auto;">
+                        <md-subheader class="md-no-sticky"> Faculty Semester Access </md-subheader>
+                        <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="faculty in ctrl2.faculties">
+                            <div class="md-list-item-text" ng-click="ctrl2.openFacultyDialog(faculty)">
+                                <h3>{{faculty.nickName}}</h3>
+                                <p>{{faculty.firstName+" "+faculty.lastName}}</p>
+                                <p>{{faculty.email}}</p>
+                                <md-checkbox class="md-secondary" ng-disabled="!faculty.pubKey" ng-change="ctrl2.addKey(faculty.email)" ng-model="ctrl2.currentKeyM[faculty.email]"></md-checkbox>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    <div flex="5"></div>
+                    <md-content flex="45">
+                        <md-data-table-container class="semester-table" style="width: 430px;">
+                            <table md-data-table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Weight</th>
+                                        <th>Mand. </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="course in ctrl2.coursesBySem">
+                                        <td> {{course.cid}} </td>
+                                        <td> {{course.name}} </td>
+                                        <td> {{course.professor1}} </td>
+                                        <td> {{course.professor2}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-data-table-container>
+                </div>
+        </div>
+        </md-content>
+    </md-content>

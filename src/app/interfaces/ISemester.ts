@@ -8,8 +8,7 @@ import * as Sequelize from 'sequelize';
 export interface ISemester {
 eid: string; // semester ID from UF system
 name: string; // displayable semester rename
-courses: ICourse[];
-admin: IUser;
+admin: string;
 current: boolean;
 }
 

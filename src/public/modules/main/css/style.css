@@ -1,0 +1,50 @@
+.login-inner-select {
+    background-color: white;
+    height: 200px;
+    width: 700px;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+.login-inner-select-reg {
+    background-color: white;
+    position: fixed;
+    height: 400px;
+    width: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    -webkit-animation: register 1s 1;
+    /* Chrome, Safari, Opera */
+}
+
+.login-content {}
+
+.login-buttons {}
+
+.login-button {
+    margin: 10px !important;
+    width: 300px;
+}
+
+
+/* Keyframes */
+
+@-webkit-keyframes register {
+    from {
+        height: 185px;
+        width: 700px;
+        top: 45%;
+        left: 50%;
+    }
+    to {
+        height: 400px;
+        width: 700px;
+        top: 50%;
+        left: 50%;
+    }
+}

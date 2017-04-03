@@ -1,7 +1,345 @@
-.admin-main {
-    background-color: blue;
+.admin-body {
+    overflow-y: hidden;
+    background-color: #e7e7e7;
 }
 
-h1 {
-    font-size: 10px;
+.main-text {
+    font-size: 25px !important;
+    margin-left: calc(1em - 10px) !important;
+    margin-top: calc(1em - 23px) !important;
+}
+
+.ui-con {
+    outline: none;
+    cursor: pointer;
+    color: rgba(0, 0, 0, .54) !important;
+}
+
+.ui-con-white {
+    outline: none;
+    cursor: pointer;
+    color: white !important;
+}
+
+.one-line-padding {
+    padding: 2px 5px 2px !important;
+}
+
+.textarea-fix {
+    padding-left: 10px !important;
+    top: -13px !important;
+}
+
+.checkbox-padding-fix {
+    top: 10px;
+}
+
+.main-bar {
+    box-shadow: 0px 1px 5px black;
+}
+
+.fake-menu {
+    padding: 8px 0 0 0;
+}
+
+.switch-tainer {
+    height: 93vh;
+}
+
+
+/* Login styles */
+
+.login-inner-admin {
+    background-color: white;
+    height: 600px;
+    width: 700px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-buttons {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-button {
+    margin: 10px !important;
+    width: 300px;
+}
+
+
+/* Sidebar styles */
+
+.md-menu-text {
+    font-size: 20px;
+    position: absolute;
+    left: calc(4em - 8px);
+    bottom: calc(1em - 10px);
+}
+
+.md-menu-icon {
+    font-size: 20px;
+}
+
+.md-menu-name {
+    height: 100%;
+    width: 106%;
+}
+
+.div-ider {
+    height: 1px;
+    background-color: #E1E1E1;
+    margin: 5 3 5 3;
+    padding: 0;
+}
+
+
+/* Admissions Styles */
+
+.admissions-container {
+    height: calc(100% - 72px);
+}
+
+.admissions-table-bar {
+    box-shadow: 0px 1px 5px black;
+}
+
+.admissions-table {
+    box-shadow: 4px 1px 5px gray;
+}
+
+.file-dragover {
+    border: 5px dashed blue;
+}
+
+.row-dragover {
+    background-color: lightblue;
+}
+
+html {
+    overflow-y: hidden !important;
+}
+
+.save-green {
+    color: lightgreen !important;
+}
+
+.new-element {
+    background-color: lightgreen;
+}
+
+
+/* Semester styles */
+
+md-list-item>div {
+    outline: none;
+}
+
+.add-icon {
+    font-size: 2em !important;
+    top: 35px;
+    position: relative;
+}
+
+.semester-create-modal {
+    height: 900px;
+    width: 900px;
+}
+
+.semester-name {
+    color: rgba(0, 0, 0, 0.58);
+    display: inline;
+}
+
+.semester-id {
+    color: rgba(0, 0, 0, 0.45);
+    display: inline;
+}
+
+.semester-border-container {
+    border-top: 1px solid #E1E1E1;
+}
+
+.semester-tabs {
+    height: 50em;
+    padding-left: 10px;
+}
+
+.semester-table {
+    max-height: 100%;
+}
+
+.semester-bar {
+    box-shadow: 1px 1px 5px gray;
+}
+
+.semester-list {
+    box-shadow: 1px 2px 6px gray;
+    height: calc(100% - 64px);
+}
+
+.semester-display {
+    margin-left: 10px;
+    box-shadow: 1px 1px 9px gray;
+    height: calc(100% - 64px);
+    overflow: hidden;
+}
+
+.semester-display-wrap {
+    padding: 4px;
+}
+
+.semester-table-special {
+    max-height: 60%;
+}
+
+
+/* Faculty styles */
+
+.faculty-list {
+    height: 87%;
+    overflow-y: auto;
+    border-right: 1px solid #E1E1E1;
+    margin: 0.5em;
+    height: 59em;
+    box-shadow: 1px 2px 6px gray;
+}
+
+.faculty-modal {
+    width: 600px;
+    overflow: hidden;
+}
+
+.faculty-bar {
+    box-shadow: 1px 1px 5px gray;
+}
+
+.faculty-list {
+    box-shadow: 1px 2px 6px gray;
+}
+
+
+/* Summary styles */
+
+.summary-content {
+    width: 100%;
+    height: 100%;
+    padding: 5px 5px 6px 5px;
+}
+
+
+/* Modal styles */
+
+.about-modal {}
+
+.pdf-modal {
+    overflow: hidden;
+    width: 80vw;
+    height: 100%;
+}
+
+.pdf-upload-cont {
+    width: 100%;
+    overflow: scroll;
+    height: 100%;
+}
+
+.fake-bar {
+    background-color: white;
+    height: 30px;
+    width: 100%;
+}
+
+
+/* Arbitrary style (styles) */
+
+.overflow {
+    overflow: hidden !important;
+}
+
+.overflow-x {
+    overflow-x: hidden !important;
+}
+
+.overflow-y {
+    overflow-y: hidden !important;
+}
+
+.white-back {
+    background-color: white !important;
+}
+
+.trans-back {
+    background-color: transparent !important;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.center-text {
+    text-align: center !important;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.add-faculty-input {
+    display: flex;
+    flex: 1;
+}
+
+
+/*// Fixes //*/
+
+
+/* Dialog fix so we overwrite angular material 80% dialogs */
+
+md-dialog {
+    max-height: 100% !important;
+    max-width: 100% !important;
+}
+
+
+/* Fixes order in <md-dialog-actions>, place it on that */
+
+.order-fix {
+    order: 2 !important;
+}
+
+.grid {
+    height: calc(100vh - 72px);
+    width: 100%;
+}
+
+.green {
+    color: green !important;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: 'liga';
 }

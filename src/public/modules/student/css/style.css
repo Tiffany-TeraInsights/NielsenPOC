@@ -1,0 +1,45 @@
+.student {
+    display: flex;
+}
+
+.student-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.student-sn {
+    height: 100%;
+}
+
+.student-switch-tainer {
+    height: 93vh;
+    width: 78vw;
+}
+
+.student-profile {
+    display: flex;
+    flex-direction: row;
+    margin: 5%;
+}
+
+.edit-button {
+    margin: auto;
+}
+
+.student-modal {
+    min-width: 70vw;
+}
+
+.student-modal-content {
+    min-width: 68vw;
+}
+
+.basic-info {
+    display: flex;
+    flex: 1;
+    max-width: 33%;
+}
+
+.basic-info-dropdown {
+    margin: inherit;
+}

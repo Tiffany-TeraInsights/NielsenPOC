@@ -1,3 +1,4 @@
+
 /// <reference path="../services/Auth.ts" />
 /// <reference path="../services/Notify.ts" />
 /// <reference path="../../../../typings/index.d.ts" />
@@ -13,32 +14,46 @@ module core {
 * @class LoginCtrl
 */
 export class LoginCtrl {
-private challengeInfo: any;
-private URL: string; // the URL we need to render in iframes
+private state: string="notLoggedIn";
+private email: string;
+private password: string;
 
 // Skip past signup phases
-login(username: string,password: string) {
-this.Auth.login(username,password)
+loginAdmin(username: string,password: string) {
+this.Auth.loginAdmin(username,password)
 .then((rep) => {
 console.log("Logged in");
-this.$state.go("todos");
+this.state="admin-main"
 this.Notify.info('Login Successful');
+console.log(this.Auth);
 },(error) => {
 console.log("Logged failed: ",error);
-this.$state.go("login");
+this.state="undefined"
 this.Notify.error('Login Failed. '+error.statusText);
 });
 }
 
-static $inject=['$sce','Notify','Auth','$state'];
+loginStudent(username: string,password: string) {
+this.Auth.loginStudent(username,password)
+.then((rep) => {
+console.log("Logged in");
+this.state="student-main"
+this.Notify.info('Login Successful');
+console.log(this.Auth);
+},(error) => {
+console.log("Logged failed: ",error);
+this.state="undefined"
+this.Notify.error('Login Failed. '+error.statusText);
+});
+}
+
+static $inject=['$sce','Notify','Auth'];
 
 constructor(
 private $sce: ng.ISCEService,
 private Notify: Notify,
 private Auth: Auth,
-private $state: angular.ui.IStateService
 ) {
-this.$state.go('login.main');
 }
 }
 }

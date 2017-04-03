@@ -22,40 +22,51 @@ getModel() {
 return this.schema;
 }
 
+getAll() {
+return this.schema.all();
+}
+
+findAllFaculty() {
+return this.schema.find({
+where: { roles: 'faculty' }
+});
+}
 /**
-* Access the account ty userid. This is the primary access method 
+* Access the account ty email. This is the primary access method 
 * 
-* @param {string} userid
+* @param {string} email
 * @returns
 */
-getAccountByUserid(userid: string) {
+getAccountByUserid(email: string) {
 return this.schema.find({
-where: { userid: userid }
+where: { email: email }
 });
 }
 
 /**
 * Register a new user  
 * 
-* @param {string} userid
+* @param {string} email
 * @param {string} password
 * @returns {Promise<IUser>}
 */
-register(userid: string,password: string) {
-let role="Admin";
+register(firstName: string,lastName: string,email: string,password: string,roles: string,cid: string) {
 let hashPwd=hashSync(password);
 return this.schema.create({
-userid: userid,
+firstName: firstName,
+lastName: lastName,
+email: email,
 password: hashPwd,
-roles: role
+roles: roles,
+cid: cid
 });
 }
 
-checkPasswd(userid: string,password: string) {
+checkPasswd(email: string,password: string) {
 return this.schema.find({
-where: { userid: userid }
+where: { email: email }
 }).then((user: IUser.IUserInstance) => {
-// console.log("User: ", user);
+console.log("User: ",user);
 if(!user)
 throw Error("User not found");
 
@@ -66,15 +77,15 @@ throw Error("Incorrect password");
 })
 }
 
-unregister(userid: string) {
+unregister(email: string) {
 return this.schema.destroy({
-where: { userid: userid }
+where: { email: email }
 });
 }
 
-confirmAdmin(userid: string) {
+confirmAdmin(email: string) {
 return this.schema.find({
-where: { userid: userid }
+where: { email: email }
 })
 .then((user: IUser.IUserInstance) => {
 if(!user)
@@ -88,21 +99,49 @@ throw Error("Unauthorized");
 
 }
 
+confirmStudent(email: string) {
+return this.schema.find({
+where: { email: email }
+})
+.then((user: IUser.IUserInstance) => {
+if(!user)
+throw Error("User not found");
+
+if(user.roles=='student')
+return user;
+else
+throw Error("Unauthorized");
+});
+
+}
+
 
 constructor(private db: Sequelize.Connection) {
 this.schema=db.define<IUser.IUserInstance,IUser.IUser>("User",{
-"userid": {
+"firstName": {
+"type": Sequelize.STRING(64),
+"allowNull": true
+},
+"lastName": {
+"type": Sequelize.STRING(64),
+"allowNull": true
+},
+"email": {
 "type": Sequelize.STRING(64),
 "allowNull": false,
 "primaryKey": true
 },
 "password": {
 "type": Sequelize.STRING(128),
-"allowNull": null
+"allowNull": true
 },
 "roles": {
 "type": Sequelize.STRING(128),
 "allowNull": false
+},
+"cid": {
+"type": Sequelize.STRING(128),
+"allowNull": true
 }
 },{
 "tableName": "users",

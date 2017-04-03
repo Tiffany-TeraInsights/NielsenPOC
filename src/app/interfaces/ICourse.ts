@@ -5,11 +5,12 @@ import { rename } from 'fs';
 import * as Sequelize from 'sequelize';
 
 export interface ICourse {
-sid: string;
-id: string;
+cid: string;
+eid: string;
 name: string;
-professor: string;
-tas: Array<string>;
+enrollment: number;
+professor1: string;
+professor2: string;
 }
 
 export interface ICourseInstance

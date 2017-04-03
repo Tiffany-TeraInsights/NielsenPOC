@@ -25,12 +25,17 @@ this.schema.hasMany(courses);
 courses.belongsTo(this.schema);
 }
 
+getAll() {
+return this.schema.all();
+}
+
 
 getModel() {
 return this.schema;
 }
 
 get(eid: string) {
+console.log("get + "+eid);
 return this.schema.findAll({
 where: { eid: eid }
 });
@@ -42,21 +47,24 @@ where: { eid: sid }
 });
 }
 
-addSemester(eid: string,name: string,admin: IUser,current: boolean) {
+addSemester(eid: string,name: string,admin: string,current: boolean) {
+
+return this.db.transaction(
+(transaction: Sequelize.Transaction) => {
 return this.schema.create({
 eid: eid,
 name: name,
-courses: null,
 admin: admin,
 current: current
-});
+},{ transaction: transaction });
+}
+)
 }
 
-updateSemester(eid: string,name: string,courses: ICourse.ICourseInstance[],admin: IUser,current: boolean) {
+updateSemester(eid: string,name: string,admin: string,current: boolean) {
 return this.schema.update({
 eid: eid,
 name: name,
-courses: courses,
 admin: admin,
 current: current
 },{
@@ -82,10 +90,6 @@ this.schema=db.define<ISemester.ISemesterInstance,ISemester.ISemester>("Semester
 "name": {
 "type": Sequelize.STRING(64),
 "allowNull": true
-},
-"courses": {
-"type": Sequelize.STRING(64),
-"allowNull": true,
 },
 "admin": {
 "type": Sequelize.STRING(64),

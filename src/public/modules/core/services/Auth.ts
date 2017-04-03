@@ -3,78 +3,73 @@
 module core {
 'use strict';
 
-/**
-* Authentication service 
-* 
-* @export
-* @class Auth
-*/
+/** Class to manage the authentication and roles */
 export class Auth {
-private user: string; // username/email of current user
-private request: string; // last request ID
-private waitUrl: string; // the url to wait for a confirmation of last request
-private regPasswd: string; // last password; deleted when no longer needed
+// expose so info can be displayed from outside
+public user: IUser; // the current user
 public loggedIn: boolean=false;
 
 /**
-* Get user email
+* Attempt a login
 */
-getUser() {
+loginAdmin(username: string,password: string) {
+var self=this;
+
+return self.$http.post('/loginAdmin',{
+username: username,
+password: password
+}).then((data: Object) => {
+self.user=<IUser>data['data'];
+self.loggedIn=true;
+return;
+})
+}
+
+loginStudent(username: string,password: string) {
+var self=this;
+
+return self.$http.post('/loginStudent',{
+username: username,
+password: password
+}).then((data: Object) => {
+self.user=<IUser>data['data'];
+self.loggedIn=true;
+return;
+})
+}
+
+getLoggedInUser() {
 return this.user;
 }
-
 /**
-* Main login. By now, we have selected a key and we have a challenge.
-* 
-* @param {string} email
-* @param {string} challenge
-* @param {string} keyID
-* @returns
+* Get the public key of the user
 */
 
-login(username: string,password: string) {
-this.user=username;
-return this.$http.post('/login',{
-username: username,
-password: password,
-request: this.request
-}).then((data: Object) => {
-this.user=<string>data['data'];
-this.loggedIn=true;
-return;
-});
-}
-
-/**
-* Logout method. 
-* 
-* @returns
-*/
 logout() {
-return this.$http.get('/logout')
+var self=this;
+return self.$http.get('/logout')
 .then(() => {
-this.loggedIn=false;
+self.loggedIn=false;
 });
 }
 
-/**
-* Method to start the registration process. To make is less confusing,
-* we remember in Auth all the parts we need 
-* 
-* @param {string} username
-* @param {string} password
-*/
+noSession(err: any) {
+alert("Could not save the data since your session expired. You need to log in again");
+location.reload();
+}
 
-register(username: string,password: string) {
+register(firstName: string,lastName: string,email: string,password: string,roles: string,cid: string) {
 var that=this;
-this.regPasswd=password;
-this.user=username;
 console.log("State: ",that);
 return this.$http.post('/register',
 {
-userID: username,
+firstName: firstName,
+lastName: lastName,
+email: email,
 password: password,
-request: this.request
+roles: roles,
+cid: cid
+
 }).then(
 (rep: any) => {
 return "User "+this.user+" registered";
@@ -83,12 +78,18 @@ return "User "+this.user+" registered";
 }
 
 
-static $inject=['$http'];
+isAdmin(): boolean {
+// Is this too fragile? Use Lodash to search?
+return this.user&&this.user.roles=='admin';
+}
+
+isFaculty(): boolean {
+return this.user&&this.user.roles=='faculty';
+}
 
 constructor(private $http: ng.IHttpService) {
 
 }
 
 }
-
 }

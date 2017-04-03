@@ -1,0 +1,111 @@
+<div class='login-back'>
+    <img src="../img/BeAGator.png" class="gator-login-img" alt="">
+    <md-content class="login-inner-select" layout="column" layout-padding ng-switch="ctrl.state" ng-class="{'login-inner-select-reg': ctrl.state == 'register'}">
+        <div class="login-content" ng-switch-default>
+            <div class="ui two column middle aligned very relaxed stackable grid">
+                <div class="column">
+                    <div class="ui form">
+                        <div class="login-buttons" layout="column">
+                            <div class="ui animated fade button primary login-button" ng-click="ctrl.go('/student.html')" tabindex="0">
+                                <div class="visible content">Student</div>
+                                <div class="hidden content">
+                                    Login
+                                </div>
+                            </div>
+                            <div class="ui animated fade button primary login-button" ng-click="ctrl.go('/faculty.html')" tabindex="0">
+                                <div class="visible content">Faculty</div>
+                                <div class="hidden content">
+                                    Login
+                                </div>
+                            </div>
+                            <div class="ui animated fade button primary login-button" ng-click="ctrl.go('/admin.html')" tabindex="0">
+                                <div class="visible content">Admin</div>
+                                <div class="hidden content">
+                                    Login
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui vertical divider">
+                    Or
+                </div>
+                <div class="center aligned column">
+                    <div class="ui big green labeled icon button" ng-click="ctrl.register()">
+                        <i class="signup icon"></i> Sign Up
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-content" layout="column" ng-switch-when="register">
+            <div class="padding">
+                <form class="ui form">
+                    <div class="field">
+                        <label>Name</label>
+                        <div class="three fields">
+                            <div class="eight wide field">
+                                <input type="text" value="firstName" id="firstName" name="firstName" ng-model="firstName" ng-required="true" placeholder="First Name">
+                            </div>
+                            <div class="five wide field">
+                                <input type="text" id="lastName" name="lastName" ng-model="lastName" ng-required="true" placeholder="Last Name">
+                            </div>
+                            <div class="three wide field">
+                                <input type="text" id="nickName" name="nickName" ng-model="nickName" ng-required="true" placeholder="Nickname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Email</label>
+                        <div class="fields">
+                            <div class="sixteen wide field">
+                                <div class="ui left icon input">
+                                    <input type="text" placeholder="Email" id="email" name="email" ng-model="email" ng-required="true" ng-pattern="/^.+@.+\..+$/">
+                                    <i class="mail icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="two fields">
+                            <div class="eight wide field">
+                                <div class="ui left icon input">
+                                    <input type="password" id="password" name="password" ng-model="password" ng-required="true" placeholder="Password">
+                                    <i class="lock icon"></i>
+                                </div>
+                            </div>
+                            <div class="eight wide field">
+                                <div class="ui left icon input">
+                                    <input type="password" for="passwordRetype" id="passwordRetype" name="passwordRetype" ng-model="passwordRetype" ng-required="true" placeholder="Confirm password">
+                                    <i class="lock icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="fields">
+                            <button class="ui primary button" ng-click="ctrl.signup(firstName, lastName, email, password, passwordRetype, nickName)">
+                                Signup
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="login-inner-select-reg" layout="column" ng-switch-when="registration-complete" style="top: 75%;">
+            <div class="padding">
+                <form class="ui form">
+                    <div class="field">
+                        <h1>Registration Process Completed</h1>
+                    </div>
+                    <div class="field">
+                        <button class="ui button" ng-click="ctrl.state = undefined">
+                            Back to login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </md-content>
+</div>

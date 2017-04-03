@@ -1,3 +1,4 @@
+import { StudentProfileSchema } from './StudentProfile';
 import { SemesterSchema } from './Semesters';
 import { CourseSchema } from './Courses';
 /// <reference path="../../typings/index.d.ts" />
@@ -24,9 +25,12 @@ export { SemesterSchema } from './Semesters';
 export var Semesters=new SemesterSchema(sequelize);
 export { CourseSchema } from './Courses';
 export var Courses=new CourseSchema(sequelize);
-
+export { StudentProfileSchema } from './StudentProfile';
+export var StudentProfiles=new StudentProfileSchema(sequelize);
 
 
 // connect schemas
-Todos.connectUsers(Users.getModel());
-Courses.connectSemesters(Semesters.getModel());
+//Todos.connectUsers(Users.getModel());
+//Courses.connectSemesters(Semesters.getModel());
+Semesters.connectCourses(Courses.getModel());
+Courses.connectTAs(Users.getModel());

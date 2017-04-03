@@ -1,23 +1,61 @@
 {
-  "name": "2Q2R-demo",
-  "homepage": "https://github.com/alinVD/2Q2R-demo",
-  "authors": [
-    "Vlad Dobra <vladmathwiz@gmail.com>"
-  ],
-  "description": "",
-  "main": "",
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular-qr": "^0.2.0",
-    "ng.dropdown": "semanticUI.ngDropdown#^1.0.3",
-    "angular-validation-match": "^1.9.0",
-    "ui-router-extras": "^0.1.2"
-  }
+    "name": "2Q2R-demo",
+    "homepage": "https://github.com/alinVD/2Q2R-demo",
+    "authors": [
+        "Vlad Dobra <vladmathwiz@gmail.com>"
+    ],
+    "description": "",
+    "main": "",
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular-qr": "^0.2.0",
+        "ng.dropdown": "semanticUI.ngDropdown#^1.0.3",
+        "angular-validation-match": "^1.9.0",
+        "ui-router-extras": "^0.1.2",
+        "angular-animate": "~1.4.7",
+        "angular-aria": "~1.4.7",
+        "angular-gridster": "~0.13.5",
+        "angular-material": "~1.1.0",
+        "angular-resource": "~1.4.7",
+        "angularjs": "~1.4.8",
+        "d3": "~3.5.6",
+        "font-awesome": "fontawesome#~4.5.0",
+        "jquery": "~2.1.4",
+        "moment": "~2.10.6",
+        "ngSmoothScroll": "~1.7.1",
+        "socket.io-client": "~1.3.7",
+        "js-xlsx": "~0.8.0",
+        "ng-file-upload": "~10.1.11",
+        "lodash": "~3.10.1",
+        "angular-material-data-table": "~0.8.14",
+        "angular-material-icons": "~0.6.0",
+        "pdfjs-dist": "~1.3.148",
+        "angularjs-pdf": "https://github.com/alinVD/angularjs-pdf.git",
+        "asmcrypto": "^0.0.10",
+        "bson": "*",
+        "angular-sanitize": "~1.5.0",
+        "semantic": "semantic-ui#~2.1.8",
+        "filesaver": "*",
+        "angular-ui-grid": "~3.0.5",
+        "angular-input-stars-directive": "angular-input-stars#^1.5.5",
+        "marked": "~0.3.5",
+        "codemirror": "~5.12.0",
+        "angular-ui-codemirror": "~0.3.0",
+        "angular-marked": "^1.0.1",
+        "waypoints": "^4.0.0"
+    },
+    "resolutions": {
+        "angular": "1.6.2",
+        "angular-material": "~1.0.6",
+        "angular-sanitize": "~1.5.0",
+        "font-awesome": "~4.5.0",
+        "ng-file-upload": "^12.2.13"
+    }
 }

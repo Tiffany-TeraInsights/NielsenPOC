@@ -1,0 +1,19 @@
+<md-content layout="row" style="border-top: 1px solid #E1E1E1">
+    <md-list flex="20" class="semester-list faculty-list" style="max-height:89vh">
+        <div layout="row">
+            <div class="md-subhead" style="margin:auto">{{ctrl2.facultyNumber}} Faculty Members</div>
+            <md-button class="md-icon-button" aria-label="Add" ng-click="ctrl2.openFacultyDialog()">
+                <md-icon><i class="fa fa-plus ui-con"></i></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
+                <md-icon><i class="fa fa-refresh ui-con"></i></md-icon>
+            </md-button>
+        </div>
+        <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="faculty in ctrl2.faculties">
+            <div class="md-list-item-text" ng-click="ctrl2.openFacultyDialog(faculty)">
+                <h3>{{faculty.firstName+" "+faculty.lastName}}</h3>
+                <p>{{faculty.email}}</p>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>

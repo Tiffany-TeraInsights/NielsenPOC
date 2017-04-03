@@ -1,0 +1,51 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-theme-light">
+
+    </md-toolbar>
+    <md-content class="fake-menu">
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+            <md-button ng-click="ctrl.selectView('admissions')">
+                <i class="fa fa-users md-menu-icon"></i>
+                <p class="md-menu-text">Admissions</p>
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button ng-click="ctrl.selectView('reviews')">
+                <i class="fa fa-search md-menu-icon"></i>
+                <p class="md-menu-text">Reviews</p>
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button ng-click="ctrl.selectView('faculty')">
+                <i class="fa fa-graduation-cap md-menu-icon"></i>
+                <p class="md-menu-text">Faculty Management</p>
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button ng-click="ctrl.selectView('semesters')">
+                <i class="fa fa-line-chart md-menu-icon"></i>
+                <p class="md-menu-text">Semester Management</p>
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button ng-click="ctrl.selectView('summary')">
+                <i class="fa fa-file-text-o md-menu-icon"></i>
+                <p class="md-menu-text">Summary</p>
+            </md-button>
+        </md-menu-item>
+        <div class="div-ider"></div>
+        <md-menu-item>
+            <md-button ng-click="ctrl.openSecretDialog()">
+                <i class="fa fa-unlock md-menu-icon"></i>
+                <p class="md-menu-text">Set Secret</p>
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button ng-click="ctrl.logout()">
+                <i class="fa fa-sign-out md-menu-icon"></i>
+                <p class="md-menu-text">Log Out</p>
+            </md-button>
+        </md-menu-item>
+    </md-content>
+</md-sidenav>

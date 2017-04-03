@@ -22,62 +22,69 @@ getModel() {
 return this.schema;
 }
 
-get(id: string,sid: string) {
+getAll() {
+return this.schema.all();
+}
+
+get(eid: string) {
 return this.schema.findAll({
 where: {
-id: id,
-sid: sid
+eid: eid
 }
 });
 }
 
-addCourse(sid: string,id: string,name: string,professor: string,tas: Array<string>) {
+addCourse(cid: string,eid: string,name: string,enrollment: number,professor1: string,professor2: string) {
 return this.schema.create({
-sid: sid,
-id: id,
+cid: cid,
+eid: eid,
 name: name,
-professor: professor,
-tas: tas
+enrollment: enrollment,
+professor1: professor1,
+professor2: professor2
 });
 }
 
-removeCourse(id: string) {
+removeCourse(cid: string) {
 return this.schema.destroy({
-where: { id: id }
+where: { cid: cid }
 });
 }
 
-update(sid: string,id: string,name: string,professor: string,tas: Array<string>) {
+update(cid: string,eid: string,name: string,enrollment: number,professor1: string,professor2: string,semesterID: string) {
 return this.schema.update({
-sid: sid,
-id: id,
+cid: cid,
+eid: eid,
 name: name,
-professor: professor,
-tas: tas
+enrollment: enrollment,
+professor1: professor1,
+professor2: professor2,
 },{
 where: {
-id: id,
-sid: sid
+cid: cid,
 },
 fields: ['completed']
 }).then((res) => {
-return this.schema.findById(id);
+return this.schema.findById(cid);
 });
 }
 
-connectSemesters(semesters: ISemester.ISemesterModel) {
+connectTAs(users: IUser.IUserModel) {
+this.schema.hasMany(users);
+users.belongsTo(this.schema);
 //    this.schema.belongsTo(semesters);
 //    semesters.hasMany(this.schema);
 }
 
 constructor(private db: Sequelize.Connection) {
 this.schema=db.define<ICourse.ICourseInstance,ICourse.ICourse>("Course",{
-"sid": {
-"type": Sequelize.STRING(128),
-"allowNull": false
-},
-"id": {
+"cid": {
 "type": Sequelize.UUID,
+"allowNull": false,
+"primaryKey": true
+},
+'eid': {
+"type": Sequelize.STRING(64),
 "allowNull": false,
 "primaryKey": true
 },
@@ -85,12 +92,16 @@ this.schema=db.define<ICourse.ICourseInstance,ICourse.ICourse>("Course",{
 "type": Sequelize.STRING(64),
 "allowNull": false
 },
-"professor": {
-"type": Sequelize.STRING(64),
-"allowNull": false,
+"enrollment": {
+"type": Sequelize.INTEGER,
+"allowNull": true
 },
-"tas": {
-"type": Sequelize.ARRAY(Sequelize.INTEGER),
+"professor1": {
+"type": Sequelize.STRING(64),
+"allowNull": false
+},
+"professor2": {
+"type": Sequelize.STRING(64),
 "allowNull": true
 }
 },{

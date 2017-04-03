@@ -1,4 +1,5 @@
 /// <reference path="../../../../typings/index.d.ts" />
+/// <reference path="../../../../typings/globals/angular/index.d.ts" />
 
 declare var Materialize: {
 toast: Function;
