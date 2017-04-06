@@ -8,6 +8,13 @@ export interface ICourse {
 cid: string;
 eid: string;
 name: string;
+sections: string;
+credits: number;
+exam: string;
+cf: string;
+eep: boolean;
+wm: string;
+ge: string;
 enrollment: number;
 professor1: string;
 professor2: string;

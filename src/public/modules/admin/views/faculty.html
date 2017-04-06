@@ -1,5 +1,5 @@
-<md-content layout="row" style="border-top: 1px solid #E1E1E1">
-    <md-list flex="20" class="semester-list faculty-list" style="max-height:89vh">
+<md-content layout="row" style="border-top: 1px solid #E1E1E1;">
+    <md-content class="semester-list faculty-list" style="max-height:89vh">
         <div layout="row">
             <div class="md-subhead" style="margin:auto">{{ctrl2.facultyNumber}} Faculty Members</div>
             <md-button class="md-icon-button" aria-label="Add" ng-click="ctrl2.openFacultyDialog()">
@@ -9,11 +9,72 @@
                 <md-icon><i class="fa fa-refresh ui-con"></i></md-icon>
             </md-button>
         </div>
-        <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="faculty in ctrl2.faculties">
-            <div class="md-list-item-text" ng-click="ctrl2.openFacultyDialog(faculty)">
-                <h3>{{faculty.firstName+" "+faculty.lastName}}</h3>
-                <p>{{faculty.email}}</p>
-            </div>
-        </md-list-item>
-    </md-list>
+        <md-content>
+            <md-input-container style="display:flex" layout="row">
+                <md-icon><i class="fa fa-search ui-con" style="margin-left:15px;"></i></md-icon>
+                <input style="max-width:250px; margin:auto;" type="text" name="search">
+            </md-input-container>
+        </md-content>
+        <md-divider></md-divider>
+        <md-list flex="20" class="faculty-listy">
+            <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="faculty in ctrl2.faculties">
+                <div class="md-list-item-text" ng-click="ctrl2.getCoursesForFaculty(faculty)">
+                    <h3>{{faculty.firstName+" "+faculty.lastName}}</h3>
+                    <p>{{faculty.email}}</p>
+                </div>
+                <div>
+                    <md-button class="md-icon-button" style="margin:auto" aria-label="Add" ng-click="ctrl2.openFacultyDialog(faculty)">
+                        <md-icon><i class="fa fa-edit ui-con"></i></md-icon>
+                    </md-button>
+                </div>
+                <div>
+                    <md-button class="md-icon-button" style="margin:auto" aria-label="Add" ng-click="ctrl2.openFacultyDialog(faculty)">
+                        <md-icon><i class="fa fa-trash ui-con"></i></md-icon>
+                    </md-button>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <md-content class="faculty-details">
+        <md-content class="faculty-info">
+            <div class="md-title faculty-section-title">Basic Information</div>
+            <md-divider></md-divider>
+            <p md-subhead>Name: {{ctrl2.selected.firstName + " " + ctrl2.selected.lastName}}</p>
+            <p md-subhead>Email: {{ctrl2.selected.email}}</p>
+        </md-content>
+        <div class="md-title faculty-section-title">Current Courses</div>
+        <md-divider></md-divider>
+        <md-content class="course-list" ng-repeat="course in ctrl2.coursesForFaculty">
+            <div class="md-subhead">{{course.cid}} {{course.name}}</div>
+            <p class="md-subheader">Currently Enrolled: {{course.enrollment}}</p>
+            <md-data-table-container class="semester-table" class="faculty-info">
+                <table md-table>
+                    <thead md-head>
+                        <th>Section ID</th>
+                        <th>Building,Room,Period,Day</th>
+                        <th>Enrollment</th>
+                        <th>TAs</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="courseSection in ctrl2.hello[course.cid]" class="md-list-item-text">
+                            <td>{{courseSection.sid}}</td>
+                            <td>
+                                <li ng-repeat="piece in ctrl2.getCourseSectionTimes(courseSection.BRPD)" style="list-style:none; word-spacing:18px;">{{piece}}</li>
+                            </td>
+                            <td>{{courseSection.enrollment}}</td>
+                            <td>{{courseSection.TAs}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
+        </md-content>
+        <br>
+        <br>
+        <div class="md-title faculty-section-title">Previous Courses</div>
+        <md-divider></md-divider>
+        <md-data-table-container ng-repeat="course in ctrl2.coursesForFaculty" class="faculty-info">
+            <div class="md-3-line">{{course.name}}</div>
+            <p>{{course.enrollment}}</p>
+        </md-data-table-container>
+    </md-content>
 </md-content>

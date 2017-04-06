@@ -1,11 +1,19 @@
 <div>
     <div class="student-profile">
         <div class="md-headline student-profile-headline">Your Student Profile</div>
-        <md-button class="md-fab md-mini md-primary edit-button" ng-click="ctrl2.openAddEditDialog(ctrl2.profile)">
+        <md-button ng-if="ctrl2.profile != null" class="md-fab md-mini md-primary edit-button" ng-click="ctrl2.openAddEditDialog(ctrl2.profile)">
             <md-icon aria-label="Edit">
                 <i class="fa fa-pencil  ui-con"></i>
                 <md-tooltip md-direction="top" class="large" style="position: absolute;">
                     Edit
+                </md-tooltip>
+            </md-icon>
+        </md-button>
+        <md-button ng-if="ctrl2.profile == null" class="md-fab md-mini md-primary edit-button" ng-click="ctrl2.openAddEditDialog()">
+            <md-icon aria-label="Edit">
+                <i class="fa fa-plus  ui-con"></i>
+                <md-tooltip md-direction="top" class="large" style="position: absolute;">
+                    Add
                 </md-tooltip>
             </md-icon>
         </md-button>

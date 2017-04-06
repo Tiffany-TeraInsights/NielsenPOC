@@ -10,6 +10,7 @@ id: string;
 facultyName: string;
 studentName: string;
 cid: string;
+sid: string;
 eid: string;
 approved: boolean;
 }

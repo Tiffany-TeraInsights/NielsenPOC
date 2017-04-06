@@ -101,8 +101,16 @@ app.route('/semesters').post(userRoutes.isAdmin,semesterRoutes.create);
 app.route('/semesters/:id').put(userRoutes.isAdmin,semesterRoutes.update);
 
 app.route('/courses').post(userRoutes.isAdmin,semesterRoutes.createCourse);
-app.route('/courses').get(userRoutes.isAdmin,semesterRoutes.listCourses);
-app.route('/courses/:eid').get(userRoutes.isAdmin,semesterRoutes.listCourses);
+app.route('/courses').get(semesterRoutes.listCourses);
+app.route('/courses/:id').put(userRoutes.isAdmin,semesterRoutes.updateCourse);
+
+app.route('/courseSections').post(userRoutes.isAdmin,semesterRoutes.createCourseSection);
+app.route('/courseSections').get(userRoutes.isAdmin,semesterRoutes.listCourseSections);
+app.route('/courseSections/:id').put(userRoutes.isAdmin,semesterRoutes.updateCourseSection);
+
+app.route('/studentprofiles').post(userRoutes.addStudentProfile);
+app.route('/studentprofiles').get(userRoutes.listStudentProfile);
+app.route('/studentprofiles/:id').put(userRoutes.updateStudentProfile);
 
 //app.route('/studentprofiles').post(userRoutes.addStudentProfile);
 // This is critical. Without it, the schema is not created

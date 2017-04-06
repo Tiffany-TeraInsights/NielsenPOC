@@ -11,7 +11,7 @@ import fs=require('fs');
 //import Semester = require('../models/Semesters');
 import { ISemester } from '../interfaces/ISemester';
 
-import { Semesters } from '../models';
+import { CourseSections,Semesters } from '../models';
 
 import { ICourse } from '../interfaces/ICourse';
 import { Courses } from '../models';
@@ -72,6 +72,17 @@ res.status(404).send(err);
 });
 }
 
+export function listCourseSections(req: express.Request,res: express.Response) {
+CourseSections.getAll()
+.then(
+(courseS) => {
+res.json(courseS);
+},
+(err) => {
+res.status(404).send(err);
+});
+}
+
 export function listCourses(req: express.Request,res: express.Response) {
 Courses.getAll()
 .then(
@@ -118,12 +129,19 @@ export function createCourse(req: express.Request,res: express.Response) {
 var cid=req.body.cid;
 var eid=req.body.eid;
 var name=req.body.name;
+var sections=req.body.sections;
+var credits=req.body.credits;
+var exam=req.body.exam;
+var cf=req.body.cf;
+var eep=req.body.eep;
+var wm=req.body.wm;
+var ge=req.body.ge;
 var enrollment=req.body.enrollment;
 var professor1=req.body.professor1;
 var professor2=req.body.professor2;
 // var semesterID = req.body.SemesterEid;
 console.log("create function:");
-Courses.addCourse(cid,eid,name,enrollment,professor1,professor2)
+Courses.addCourse(cid,eid,name,sections,credits,exam,cf,eep,wm,ge,enrollment,professor1,professor2)
 .then(
 (course) => {
 res.json(course);
@@ -133,4 +151,69 @@ console.log("create function: "+err);
 res.status(404).send(err);
 });
 
+}
+
+export function updateCourse(req: express.Request,res: express.Response) {
+var cid=req.body.cid;
+var eid=req.body.eid;
+var name=req.body.name;
+var sections=req.body.sections;
+var credits=req.body.credits;
+var exam=req.body.exam;
+var cf=req.body.cf;
+var eep=req.body.eep;
+var wm=req.body.wm;
+var ge=req.body.ge;
+var enrollment=req.body.enrollment;
+var professor1=req.body.professor1;
+var professor2=req.body.professor2;
+
+Courses.update(cid,eid,name,sections,credits,exam,cf,eep,wm,ge,enrollment,professor1,professor2)
+.then(
+(course) => {
+res.json(course);
+},
+(err) => {
+console.log("create function: "+err);
+res.status(404).send(err);
+});
+}
+
+
+export function createCourseSection(req: express.Request,res: express.Response) {
+var sid=req.body.sid;
+var cid=req.body.cid;
+var eid=req.body.eid;
+var BRPD=req.body.BRPD;
+var enrollment=req.body.enrollment;
+var TAs=req.body.TAs;
+
+CourseSections.addCourseSection(sid,cid,eid,BRPD,enrollment,TAs)
+.then(
+(courseSection) => {
+res.json(courseSection);
+},
+(err) => {
+console.log("create function: "+err);
+res.status(404).send(err);
+});
+}
+
+export function updateCourseSection(req: express.Request,res: express.Response) {
+var sid=req.body.sid;
+var cid=req.body.cid;
+var eid=req.body.eid;
+var BRPD=req.body.BRPD;
+var enrollment=req.body.enrollment;
+var TAs=req.body.TAs;
+
+CourseSections.updateCourseSection(sid,cid,eid,BRPD,enrollment,TAs)
+.then(
+(courseSection) => {
+res.json(courseSection);
+},
+(err) => {
+console.log("create function: "+err);
+res.status(404).send(err);
+});
 }

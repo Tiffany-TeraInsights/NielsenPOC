@@ -34,11 +34,18 @@ eid: eid
 });
 }
 
-addCourse(cid: string,eid: string,name: string,enrollment: number,professor1: string,professor2: string) {
+addCourse(cid: string,eid: string,name: string,sections: string,credits: number,exam: string,cf: string,eep: boolean,wm: string,ge: string,enrollment: number,professor1: string,professor2: string) {
 return this.schema.create({
 cid: cid,
 eid: eid,
 name: name,
+sections: sections,
+credits: credits,
+exam: exam,
+cf: cf,
+eep: eep,
+wm: wm,
+ge: ge,
 enrollment: enrollment,
 professor1: professor1,
 professor2: professor2
@@ -51,14 +58,21 @@ where: { cid: cid }
 });
 }
 
-update(cid: string,eid: string,name: string,enrollment: number,professor1: string,professor2: string,semesterID: string) {
+update(cid: string,eid: string,name: string,sections: string,credits: number,exam: string,cf: string,eep: boolean,wm: string,ge: string,enrollment: number,professor1: string,professor2: string) {
 return this.schema.update({
 cid: cid,
 eid: eid,
 name: name,
+sections: sections,
+credits: credits,
+exam: exam,
+cf: cf,
+eep: eep,
+wm: wm,
+ge: ge,
 enrollment: enrollment,
 professor1: professor1,
-professor2: professor2,
+professor2: professor2
 },{
 where: {
 cid: cid,
@@ -91,6 +105,34 @@ this.schema=db.define<ICourse.ICourseInstance,ICourse.ICourse>("Course",{
 "name": {
 "type": Sequelize.STRING(64),
 "allowNull": false
+},
+"sections": {
+"type": Sequelize.STRING(64),
+"allowNull": true
+},
+"credits": {
+"type": Sequelize.INTEGER,
+"allowNull": true
+},
+"exam": {
+"type": Sequelize.STRING(64),
+"allowNull": true
+},
+"cf": {
+"type": Sequelize.STRING(64),
+"allowNull": true
+},
+"eep": {
+"type": Sequelize.BOOLEAN,
+"allowNull": true
+},
+"wm": {
+"type": Sequelize.STRING(64),
+"allowNull": true
+},
+"ge": {
+"type": Sequelize.STRING(64),
+"allowNull": true
 },
 "enrollment": {
 "type": Sequelize.INTEGER,

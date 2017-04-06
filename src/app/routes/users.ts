@@ -82,15 +82,42 @@ var FSS=req.body.FSS;
 var GPA=req.body.GPA;
 var testScores=req.body.testScores;
 var courseList=req.body.courseList;
-var courseListGrades=req.body.courseListGrades;
 var degrees=req.body.degrees;
 var pastTAships=req.body.pastTAships;
 
-StudentProfiles.addStudentProfile(email,studentType,FSS,GPA,testScores,courseList,courseListGrades,degrees,pastTAships)
+StudentProfiles.addStudentProfile(email,studentType,FSS,GPA,testScores,courseList,degrees,pastTAships)
 .then((studentProfile) => {
 res.json(studentProfile);
 },(err) => {
 res.status(400).send(err);
+});
+}
+
+export function updateStudentProfile(req: express.Request,res: express.Response) {
+console.log("route"+req.body.email);
+var email=req.body.email;
+var studentType=req.body.studentType;
+var FSS=req.body.FSS;
+var GPA=req.body.GPA;
+var testScores=req.body.testScores;
+var courseList=req.body.courseList;
+var degrees=req.body.degrees;
+var pastTAships=req.body.pastTAships;
+
+StudentProfiles.update(email,studentType,FSS,GPA,testScores,courseList,degrees,pastTAships)
+.then((studentProfile) => {
+res.json(studentProfile);
+},(err) => {
+res.status(400).send(err);
+});
+}
+
+export function listStudentProfile(req: express.Request,res: express.Response) {
+StudentProfiles.getAll()
+.then((sp) => {
+res.json(sp);
+},(err) => {
+res.status(404).send(err);
 });
 }
 

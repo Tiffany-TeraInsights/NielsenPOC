@@ -51,8 +51,10 @@ getAll(): ISemester[] {
 return this.list;
 }
 
-current(): ISemester {
-return this.semester;
+current() {
+return this.list.filter((sems) => {
+return ((sems.current)==true);
+});
 }
 
 remove(eid: string) {

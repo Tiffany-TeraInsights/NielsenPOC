@@ -1,29 +1,23 @@
 module core {
 
-export interface ICourse extends ng.resource.IResource<ICourse> {
-cid: string;
+export interface ICourseSection extends ng.resource.IResource<ICourseSection> {
+sid: string
+cid: string; // course id
 eid: string;
-name: string;
-sections: string;
-credits: number;
-exam: string;
-cf: string;
-eep: boolean;
-wm: string;
-ge: string;
+BRPD: string;
 enrollment: number;
-professor1: string;
-professor2: string;
+TAs: string;
 }
 
-interface ICourseResource extends ng.resource.IResourceClass<ICourse> {
-getAll(params: Object,success?: Function,error?: Function): ICourse[],
-update(params: Object,data: ICourse,success?: Function,error?: Function): ICourse;
+interface ICourseSectionResource extends ng.resource.IResourceClass<ICourseSection> {
+getAll(params: Object,success?: Function,error?: Function): ICourseSection[];
+update(params: Object,data: ICourseSection,success?: Function,error?: Function): ICourseSection;
+
 }
 
-export class Courses {
-static Resource($resource: ng.resource.IResourceService): ICourseResource {
-var url="/courses/";
+export class CourseSections {
+static Resource($resource: ng.resource.IResourceService): ICourseSectionResource {
+var url="/courseSections/";
 var resource=$resource("",{},{
 'query': { method: 'GET',url: url,isArray: true },
 'getAll': { method: 'GET',params: {},url: url+"all/:eid",isArray: true },
@@ -31,28 +25,28 @@ var resource=$resource("",{},{
 'update': { method: 'PUT',params: { id: "@id" },url: url+":id" },
 'remove': { method: 'DELETE',params: { id: "@id" },url: url+":id" }
 });
-return <ICourseResource>resource;
+return <ICourseSectionResource>resource;
 }
 
-private list: ICourse[]=[];
-private listByEid: { [eid: string]: ICourse }={};
-private listForSemester: ICourse[]=[];
-private listForFaculty: ICourse[]=[];
-private course: ICourse;
-private resource: ICourseResource;
+private list: ICourseSection[]=[];
+private listByEid: { [eid: string]: ICourseSection }={};
+private listForCourses: ICourseSection[]=[];
+private listForFaculty: ICourseSection[]=[];
+private course: ICourseSection;
+private resource: ICourseSectionResource;
 
-getListForSemester(): ICourse[] {
-return this.listForSemester;
+getListForSemester(): ICourseSection[] {
+return this.listForCourses;
 }
 
 getAll() {
 return this.list;
 }
 
-addCourse(courseI: ICourse) {
+addCourseSection(courseI: ICourseSection) {
 var that=this;
 var defer=this.$q.defer();
-this.resource.save(courseI,(course: ICourse) => {
+this.resource.save(courseI,(course: ICourseSection) => {
 that.list.push(course);
 that.listByEid[course.eid]=course; // update index
 defer.resolve(course);
@@ -60,10 +54,10 @@ defer.resolve(course);
 return defer.promise;
 }
 
-updateCourse(courseI: ICourse) {
+updateCourseSection(courseS: ICourseSection) {
 let defer=this.$q.defer();
-this.resource.update({ id: courseI.cid },courseI,
-(course: ICourse) => { defer.resolve(course); },
+this.resource.update({ id: courseS.cid },courseS,
+(course: ICourseSection) => { defer.resolve(course); },
 (err) => { defer.reject(err); });
 return defer.promise;
 }
@@ -74,7 +68,7 @@ this.resource.query((courses) => {
 this.list=courses;
 _.forEach(this.list,function(value) {
 if(value.eid==this.current.eid) {
-this.listForSemester.push(value);
+this.listForCourses.push(value);
 }
 });
 defer.resolve(courses);
@@ -82,9 +76,9 @@ defer.resolve(courses);
 return defer.promise;
 }
 
-getCoursesForFaculty(faculty: core.IUser) {
-return this.list.filter((course) => {
-return ((course.professor1||course.professor2)==faculty.firstName+" "+faculty.lastName);
+getCourseSections(course: core.ICourse) {
+return this.list.filter((courseS) => {
+return ((courseS.cid)==course.cid);
 });
 }
 
@@ -97,7 +91,7 @@ defer.resolve(courses);
 return defer.promise;
 }
 
-removeCourse(course: ICourse) {
+removeCourse(course: ICourseSection) {
 return course.$remove();
 }
 
@@ -111,7 +105,7 @@ static $inject=['$resource','$q','$http'];
 constructor($resource: ng.resource.IResourceService,
 private $q: ng.IQService,
 private $http: ng.IHttpService) {
-this.resource=core.Courses.Resource($resource);
+this.resource=core.CourseSections.Resource($resource);
 
 }
 }

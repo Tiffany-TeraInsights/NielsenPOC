@@ -7,8 +7,7 @@ module student {
 export class StudentCtrl {
 private state: string="summary";
 private stateName: string;
-
-private user: string;
+private user: core.IUser;
 private profile: core.IStudentProfile;
 
 
@@ -24,18 +23,18 @@ break;
 }
 }
 
-getUser() {
-if(this.Auth.user!=null) {
-this.user=this.Auth.user.firstName+" "+this.Auth.user.lastName;
-} else {
-this.user="";
-}
-}
 
 selectView(view: string) {
 this.state=view;
 this.updateState();
 this.$mdSidenav('left').isLockedOpen();
+}
+
+refresh() {
+this.user=this.Auth.getLoggedInUser();
+this.StudentProfile.refresh().then(() => {
+this.profile=this.StudentProfile.getUserProfile(this.user)[0];
+});
 }
 
 openAddEditDialog(studentProfile: core.IStudentProfile) {
@@ -86,6 +85,7 @@ private Auth: core.Auth,
 private Notify: core.Notify
 ) {
 this.updateState();
+this.refresh();
 //this.getUser();
 //this.user=new core.UserInfo();
 }

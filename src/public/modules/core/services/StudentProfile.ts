@@ -51,9 +51,21 @@ return defer.promise;
 }
 
 update(userP: IStudentProfile) {
-return this.resource.update({
-email: userP.email
-},userP).$promise;
+let defer=this.$q.defer();
+console.log("hi");
+console.log(userP);
+this.resource.update({ id: userP.email },userP,
+(up: IStudentProfile) => {
+console.log("update"+up);
+defer.resolve(up); undefined},
+(err) => { defer.reject(err); });
+return defer.promise;
+}
+
+getUserProfile(user: core.IUser) {
+return this.list.filter((userP) => {
+return (user.email==userP.email);
+});
 }
 
 refresh() {

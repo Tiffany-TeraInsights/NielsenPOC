@@ -9,7 +9,6 @@ FSS: boolean;
 GPA: string;
 testScores: string;
 courseList: string;
-courseListGrades: string;
 degrees: string;
 pastTAships: string;
 }

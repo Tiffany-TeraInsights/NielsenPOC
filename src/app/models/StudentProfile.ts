@@ -1,3 +1,4 @@
+import { emit } from 'cluster';
 
 import * as Sequelize from 'sequelize';
 import * as Promise from "bluebird";
@@ -21,7 +22,7 @@ getAll() {
 return this.schema.all();
 }
 
-addStudentProfile(email: string,studentType: string,FSS: boolean,GPA: string,testScores: string,courseList: string,courseListGrades: string,degrees: string,pastTAships: string) {
+addStudentProfile(email: string,studentType: string,FSS: boolean,GPA: string,testScores: string,courseList: string,degrees: string,pastTAships: string) {
 return this.schema.create({
 email: email,
 studentType: studentType,
@@ -29,11 +30,28 @@ FSS: FSS,
 GPA: GPA,
 testScores: testScores,
 courseList: courseList,
-courseListGrades: courseListGrades,
 degrees: degrees,
 pastTAships: pastTAships
 });
 }
+
+update(email: string,studentType: string,FSS: boolean,GPA: string,testScores: string,courseList: string,degrees: string,pastTAships: string) {
+return this.schema.update({
+email: email,
+studentType: studentType,
+FSS: FSS,
+GPA: GPA,
+testScores: testScores,
+courseList: courseList,
+degrees: degrees,
+pastTAships: pastTAships
+},{
+where: { email: email },
+}).then((res) => {
+return this.schema.findById(email);
+});
+}
+
 
 constructor(private db: Sequelize.Connection) {
 this.schema=db.define<IStudentProfile.IStudentProfileInstance,IStudentProfile.IStudentProfile>("Student Profile",{
@@ -59,10 +77,6 @@ this.schema=db.define<IStudentProfile.IStudentProfileInstance,IStudentProfile.IS
 "allowNull": true
 },
 "courseList": {
-"type": Sequelize.STRING,
-"allowNull": true
-},
-"courseListGrades": {
 "type": Sequelize.STRING,
 "allowNull": true
 },

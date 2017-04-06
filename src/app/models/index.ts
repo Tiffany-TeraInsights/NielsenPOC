@@ -1,3 +1,4 @@
+import { CourseSectionSchema } from './CourseSections';
 import { StudentProfileSchema } from './StudentProfile';
 import { SemesterSchema } from './Semesters';
 import { CourseSchema } from './Courses';
@@ -27,6 +28,8 @@ export { CourseSchema } from './Courses';
 export var Courses=new CourseSchema(sequelize);
 export { StudentProfileSchema } from './StudentProfile';
 export var StudentProfiles=new StudentProfileSchema(sequelize);
+export { CourseSectionSchema } from './CourseSections';
+export var CourseSections=new CourseSectionSchema(sequelize);
 
 
 // connect schemas

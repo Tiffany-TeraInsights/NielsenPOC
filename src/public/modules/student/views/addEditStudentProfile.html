@@ -10,21 +10,21 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content class="student-modal-content" layout="column" layout-padding>
+    <md-dialog-content class="student-modal-content" layout="column" layout-padding style="overflow:scroll;">
         <label class="md-title">Basic Information</label>
         <form>
             <md-content layout="row" layout-padding>
                 <md-input-container class="md-block basic-info">
                     <label>First Name</label>
-                    <input type="text" ng-model="cMod.semester.name">
+                    <input type="text" ng-model="cMod.user.firstName">
                 </md-input-container>
                 <md-input-container class="md-block basic-info">
                     <label>Last Name</label>
-                    <input type="text" ng-model="cMod.semester.eid">
+                    <input type="text" ng-model="cMod.user.lastName">
                 </md-input-container>
                 <md-input-container class="md-block basic-info">
                     <label>UF Email</label>
-                    <input type="text" ng-model="cMod.semester.eid">
+                    <input type="text" ng-model="cMod.studentProfile.email">
                 </md-input-container>
             </md-content>
             <md-content layout="row" layout-padding>
@@ -40,80 +40,163 @@
                     <md-checkbox ng-model="cMod.studentProfile.FSS" aria-label="Checkbox 2" ng-true-value="'yup'" ng-false-value="'nope'" style="opacity:100; margin:inherit; left:0%;">
                         First Semester Student?
                     </md-checkbox>
-                </md-input-container class="md-block basic-info">
+                </md-input-container>
+                <md-input-container class="md-block basic-info">
+                    <label>GPA</label>
+                    <input type="number" ng-model="cMod.studentProfile.GPA">
+                </md-input-container>
             </md-content>
         </form>
-        <label class="md-title">Courses Taken</label>
-
-        <md-content>
-            <md-tabs md-dynamic-height md-border-bottom>
-                <md-tab label="Courses">
-                    <div flex="5"></div>
-                    <form class="ui form">
-                        <div class="field">
-                            <div class="two fields">
-                                <div class="two wide field">
-                                    <label>Course Code</label>
-                                    <input type="text" placeholder="Course Code" ng-model="cMod.course.cid">
-                                </div>
-                                <div class="seven wide field">
-                                    <label>Name</label>
-                                    <input type="text" placeholder="Name" ng-model="cMod.course.name">
-                                </div>
-                                <div class="three wide field">
-                                    <label>Enrollment</label>
-                                    <input type="number" placeholder="Weight" ng-model="cMod.course.enrollment">
-                                </div>
-                                <div class="three wide field">
-                                    <label>Professor 1</label>
-                                    <input type="text" placeholder="Weight" ng-model="cMod.course.professor1">
-                                </div>
-                                <div class="three wide field">
-                                    <label>Professor 2</label>
-                                    <input type="text" placeholder="Weight" ng-model="cMod.course.professor2">
-                                </div>
-
-                                <div class="one wide field">
-                                    <i class="icon add-icon ui-con" ng-class="{'plus': !cMod.editing, 'checkmark':cMod.editing}" ng-click="cMod.addCourse()"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <md-data-table-container class="semester-table-special">
-                        <table md-data-table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>professor1</th>
-                                    <th>professor2</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="course in cMod.courses">
-                                    <td> {{course.cid}} </td>
-                                    <td> {{course.name}} </td>
-                                    <td> {{course.professor1}} </td>
-                                    <td> {{course.professor2}} </td>
-                                    <td>
-                                        <md-button class="md-icon-button" ng-click="cMod.score = score; cMod.editing = true;">
-                                            <md-icon aria-label="Close dialog">
-                                                <i class="fa fa-pencil fa-lg ui-con"></i>
-                                            </md-icon>
-                                        </md-button>
-                                        <md-button class="md-icon-button" ng-click="cMod.removeScore($index)">
-                                            <md-icon aria-label="Close dialog">
-                                                <i class="fa fa-trash fa-lg ui-con"></i>
-                                            </md-icon>
-                                        </md-button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </md-data-table-container>
-                </md-tab>
-            </md-tabs>
+        <label class="md-title" style="margin-top: 4%">Test Scores</label>
+        <md-content style="overflow:visible">
+            <form>
+                <md-content layout="row" layout-padding>
+                    <md-input-container class="md-block basic-info">
+                        <label>College Admission Test Scores</label>
+                        <md-select class="basic-info-dropdown" ng-model="cMod.testType" select-clear>
+                            <md-option ng-repeat="tests in cMod.testTypes" value="{{tests.type}}">
+                                {{tests.type}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block basic-info">
+                        <label>Test Score</label>
+                        <input type="number" ng-model="cMod.testScore">
+                    </md-input-container>
+                    <md-button ng-click="cMod.addTest()">
+                        <md-icon aria-label="Add Test">
+                            <i class="fa fa-plus"></i>
+                        </md-icon>
+                    </md-button>
+                </md-content>
+            </form>
+            <md-data-table-container class="semester-table-special">
+                <table md-data-table>
+                    <thead>
+                        <tr>
+                            <th>Test</th>
+                            <th>Score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="test in cMod.tl">
+                            <td> {{test[0]}} </td>
+                            <td> {{test[1]}} </td>
+                            <td>
+                                <md-button class="md-icon-button" ng-click="cMod.deleteTest(test)">
+                                    <md-icon aria-label="Close dialog">
+                                        <i class="fa fa-trash ui-con"></i>
+                                    </md-icon>
+                                    <md-tooltip>Delete</md-tooltip>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
+        </md-content>
+        <label class="md-title" style="margin-top: 4%">Degrees</label>
+        <md-content style="overflow:visible">
+            <form>
+                <md-content layout="row" layout-padding>
+                    <md-input-container class="md-block basic-info">
+                        <label>Degree Type</label>
+                        <md-select class="basic-info-dropdown" ng-model="cMod.individualDL">
+                            <md-option ng-repeat="types in cMod.degreeTypes" value="{{types.type}}">
+                                {{types.type}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block basic-info">
+                        <label>Degree Title</label>
+                        <input type="text" ng-model="cMod.individualDegree">
+                    </md-input-container>
+                    <md-button ng-click="cMod.addDegree()">
+                        <md-icon aria-label="Add Degree">
+                            <i class="fa fa-plus"></i>
+                        </md-icon>
+                    </md-button>
+                </md-content>
+            </form>
+            <md-data-table-container class="semester-table-special">
+                <table md-data-table>
+                    <thead>
+                        <tr>
+                            <th>Degree Level</th>
+                            <th>Degree Title</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="degree in cMod.dl">
+                            <td> {{degree[0]}} </td>
+                            <td> {{degree[1]}} </td>
+                            <td>
+                                <md-button class="md-icon-button" ng-click="cMod.deleteDegree(degree)">
+                                    <md-icon aria-label="Close dialog">
+                                        <i class="fa fa-trash ui-con"></i>
+                                    </md-icon>
+                                    <md-tooltip>Delete</md-tooltip>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
+        </md-content>
+        <label class="md-title" style="margin-top: 4%">CISE Courses Taken</label>
+        <md-content style="overflow:visible">
+            <form>
+                <md-content layout="row" layout-padding>
+                    <md-input-container class="md-block basic-info">
+                        <label>Course Code and Name</label>
+                        <md-select class="basic-info-dropdown" ng-model="cMod.individualCourse" select-clear>
+                            <md-option ng-repeat="courses in cMod.CourseList" value="{{courses.cid}}">
+                                {{courses.cid}} {{courses.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block basic-info">
+                        <label>Grade Earned</label>
+                        <md-select class="basic-info-dropdown" ng-model="cMod.individualGrade" select-clear>
+                            <md-option ng-repeat="grades in cMod.grades" value="{{grades.grade}}">
+                                {{grades.grade}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-button ng-click="cMod.appendCourseList()">
+                        <md-icon aria-label="Add Course">
+                            <i class="fa fa-plus"></i>
+                        </md-icon>
+                    </md-button>
+                </md-content>
+            </form>
+            <md-data-table-container class="semester-table-special">
+                <table md-data-table>
+                    <thead>
+                        <tr>
+                            <th>Course Taken</th>
+                            <th>Grade</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="course in cMod.cl">
+                            <td> {{course[0]}} </td>
+                            <td> {{course[1]}} </td>
+                            <td>
+                                <md-button class="md-icon-button" ng-click="cMod.deleteCourse(course)">
+                                    <md-icon aria-label="Close dialog">
+                                        <i class="fa fa-trash ui-con"></i>
+                                    </md-icon>
+                                    <md-tooltip>Delete</md-tooltip>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
         </md-content>
     </md-dialog-content>
     <md-dialog-actions class="order-fix" layout="row">

@@ -50,33 +50,35 @@
                 </md-button>
                 <h3 class="semester-id"><br>{{ctrl2.current.eid}}</h3>
                 <div layout="row">
-                    <md-list flex="20" style="max-height: calc(100vh - 210px); overflow-y: auto;">
-                        <md-subheader class="md-no-sticky"> Faculty Semester Access </md-subheader>
-                        <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="faculty in ctrl2.faculties">
-                            <div class="md-list-item-text" ng-click="ctrl2.openFacultyDialog(faculty)">
-                                <h3>{{faculty.nickName}}</h3>
-                                <p>{{faculty.firstName+" "+faculty.lastName}}</p>
-                                <p>{{faculty.email}}</p>
-                                <md-checkbox class="md-secondary" ng-disabled="!faculty.pubKey" ng-change="ctrl2.addKey(faculty.email)" ng-model="ctrl2.currentKeyM[faculty.email]"></md-checkbox>
-                            </div>
-                        </md-list-item>
-                    </md-list>
-                    <div flex="5"></div>
-                    <md-content flex="45">
-                        <md-data-table-container class="semester-table" style="width: 430px;">
+                    <md-content>
+                        <md-data-table-container class="semester-table">
                             <table md-data-table>
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Course ID</th>
                                         <th>Name</th>
-                                        <th>Weight</th>
-                                        <th>Mand. </th>
+                                        <th>Credits</th>
+                                        <th>Exam</th>
+                                        <th>CF</th>
+                                        <th>EEP</th>
+                                        <th>EM</th>
+                                        <th>GE</th>
+                                        <th>Enrollment</th>
+                                        <th>Professor 1</th>
+                                        <th>Professor 2</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="course in ctrl2.coursesBySem">
                                         <td> {{course.cid}} </td>
                                         <td> {{course.name}} </td>
+                                        <td> {{course.credits}} </td>
+                                        <td> {{course.exam}} </td>
+                                        <td> {{course.cf}} </td>
+                                        <td> {{course.eep}} </td>
+                                        <td> {{course.wm}} </td>
+                                        <td> {{course.ge}} </td>
+                                        <td> {{course.enrollement}} </td>
                                         <td> {{course.professor1}} </td>
                                         <td> {{course.professor2}} </td>
                                     </tr>
