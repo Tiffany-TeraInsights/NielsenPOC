@@ -1,22 +1,21 @@
 
-import { IUser } from './IUser';
-import { rename } from 'fs';
-
 /// <reference path="../../typings/index.d.ts" />
 import * as Sequelize from 'sequelize';
 
 export interface IRecommendation {
 id: string;
-facultyName: string;
-studentName: string;
+faculty: string;
+student: string;
 cid: string;
 sid: string;
 eid: string;
-approved: boolean;
+taType: string;
+approved: string;
+description: string;
 }
 
-export interface ICourseInstance
-extends Sequelize.Instance<ICourseInstance,IRecommendation>,IRecommendation { }
+export interface IRecommendationInstance
+extends Sequelize.Instance<IRecommendationInstance,IRecommendation>,IRecommendation { }
 
-export interface ICourseModel
-extends Sequelize.Model<ICourseInstance,IRecommendation> { }
+export interface IRecommendationModel
+extends Sequelize.Model<IRecommendationInstance,IRecommendation> { }

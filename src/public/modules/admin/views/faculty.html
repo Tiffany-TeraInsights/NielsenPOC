@@ -1,7 +1,11 @@
 <md-content layout="row" style="border-top: 1px solid #E1E1E1;">
     <md-content class="semester-list faculty-list" style="max-height:89vh">
-        <div layout="row">
-            <div class="md-subhead" style="margin:auto">{{ctrl2.facultyNumber}} Faculty Members</div>
+        <div layout="row" style="margin:inherit">
+            <md-select class="basic-info-dropdown" ng-model="ctrl2.selectedType" style="flex:1;">
+                <md-option ng-repeat="type in ctrl2.fOptions" value="{{type.type}}">
+                    {{type.name}}
+                </md-option>
+            </md-select>
             <md-button class="md-icon-button" aria-label="Add" ng-click="ctrl2.openFacultyDialog()">
                 <md-icon><i class="fa fa-plus ui-con"></i></md-icon>
             </md-button>
@@ -9,6 +13,7 @@
                 <md-icon><i class="fa fa-refresh ui-con"></i></md-icon>
             </md-button>
         </div>
+        <div class="md-subhead" style="margin:inherit">{{ctrl2.facultyNumber}} Faculty Members</div>
         <md-content>
             <md-input-container style="display:flex" layout="row">
                 <md-icon><i class="fa fa-search ui-con" style="margin-left:15px;"></i></md-icon>
@@ -39,15 +44,15 @@
         <md-content class="faculty-info">
             <div class="md-title faculty-section-title">Basic Information</div>
             <md-divider></md-divider>
-            <p md-subhead>Name: {{ctrl2.selected.firstName + " " + ctrl2.selected.lastName}}</p>
+            <div class="md-headline">{{ctrl2.selected.firstName + " " + ctrl2.selected.lastName}}</div>
             <p md-subhead>Email: {{ctrl2.selected.email}}</p>
         </md-content>
         <div class="md-title faculty-section-title">Current Courses</div>
         <md-divider></md-divider>
-        <md-content class="course-list" ng-repeat="course in ctrl2.coursesForFaculty">
+        <md-content class="course-list" ng-if="course.eid == ctrl2.currentSemester.eid" ng-repeat="course in ctrl2.coursesForFaculty">
             <div class="md-subhead">{{course.cid}} {{course.name}}</div>
             <p class="md-subheader">Currently Enrolled: {{course.enrollment}}</p>
-            <md-data-table-container class="semester-table" class="faculty-info">
+            <md-data-table-container class="semester-table" class="faculty-info" style="margin-left: 5%;">
                 <table md-table>
                     <thead md-head>
                         <th>Section ID</th>
@@ -72,9 +77,10 @@
         <br>
         <div class="md-title faculty-section-title">Previous Courses</div>
         <md-divider></md-divider>
-        <md-data-table-container ng-repeat="course in ctrl2.coursesForFaculty" class="faculty-info">
+        <md-data-table-container ng-if="course.eid != ctrl2.currentSemester.eid" ng-repeat="course in ctrl2.coursesForFaculty" class="faculty-info">
             <div class="md-3-line">{{course.name}}</div>
-            <p>{{course.enrollment}}</p>
+            <p>{{course.eid}}</p>
+            <p>Enrollment: {{course.enrollment}}</p>
         </md-data-table-container>
     </md-content>
 </md-content>

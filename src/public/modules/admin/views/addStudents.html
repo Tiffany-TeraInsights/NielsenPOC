@@ -1,0 +1,46 @@
+<md-dialog aria-label="About" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Add Student</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cMod.cancel()">
+                <md-icon aria-label="Close dialog">
+                    <i class="fa fa-times "></i>
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="faculty-modal" layout="column" layout-padding>
+        <form>
+            <md-content layout="row" layout-padding>
+                <md-input-container class="add-faculty-input">
+                    <label>First Name</label>
+                    <input type="text" ng-model="cMod.student.firstName">
+                </md-input-container>
+                <md-input-container class="add-faculty-input">
+                    <label>Last Name</label>
+                    <input type="text" ng-model="cMod.student.lastName">
+                </md-input-container>
+            </md-content>
+            <md-content layout="row" layout-padding>
+                <md-input-container class="add-faculty-input">
+                    <label>Email</label>
+                    <input type="text" ng-model="cMod.student.email">
+                </md-input-container>
+                <md-input-container class="add-faculty-input">
+                    <label>Password</label>
+                    <input type="text" ng-model="cMod.student.password">
+                </md-input-container>
+            </md-content>
+            <md-content ngf-drop="cMod.import($file)" ngf-drag-over-class="'file-dragover'" ngf-multiple="false" ngf-allow-dir="false">
+                <md-icon aria-label="Close dialog">
+                    <i class="fa fa-upload">Upload CSV File</i>
+                </md-icon>
+            </md-content>
+    </md-dialog-content>
+    <md-dialog-actions class="order-fix" layout="row">
+        <span flex></span>
+        <md-button md-autofocus ng-click="cMod.accept()">Accept</md-button>
+        <md-button ng-click="cMod.cancel()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

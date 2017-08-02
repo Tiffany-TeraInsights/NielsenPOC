@@ -1,4 +1,4 @@
-<md-dialog aria-label="About" ng-cloak>
+<md-dialog aria-label="Add Semester" ng-cloak>
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>Add Semester</h2>
@@ -10,54 +10,49 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content class="faculty-modal" layout="column" layout-padding>
-        <form class="ui form">
-            <div class="field">
-                <div class="three fields">
-                    <div class="eight wide field">
-                        <label>Name</label>
-                        <input type="text" placeholder="Name" ng-model="cMod.semester.name">
-                    </div>
-                    <div class="eight wide field">
-                        <label>Eid</label>
-                        <input type="text" placeholder="Eid" ng-model="cMod.semester.eid">
-                    </div>
-                </div>
-            </div>
+    <md-dialog-content class="semester-edit-modal" layout="column" layout-padding>
+        <form>
+            <md-content layout="row">
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="cMod.semester.name">
+                </md-input-container>
+                <md-input-container>
+                    <label>Eid</label>
+                    <input type="text" ng-model="cMod.semester.eid">
+                </md-input-container>
+            </md-content>
         </form>
         <md-content>
             <md-tabs md-dynamic-height md-border-bottom>
                 <md-tab label="Courses">
                     <div flex="5"></div>
-                    <form class="ui form">
-                        <div class="field">
-                            <div class="two fields">
-                                <div class="two wide field">
-                                    <label>Course Code</label>
-                                    <input type="text" placeholder="Course Code" ng-model="cMod.course.cid">
-                                </div>
-                                <div class="seven wide field">
-                                    <label>Name</label>
-                                    <input type="text" placeholder="Name" ng-model="cMod.course.name">
-                                </div>
-                                <div class="three wide field">
-                                    <label>Enrollment</label>
-                                    <input type="number" placeholder="Weight" ng-model="cMod.course.enrollment">
-                                </div>
-                                <div class="three wide field">
-                                    <label>Professor 1</label>
-                                    <input type="text" placeholder="Weight" ng-model="cMod.course.professor1">
-                                </div>
-                                <div class="three wide field">
-                                    <label>Professor 2</label>
-                                    <input type="text" placeholder="Weight" ng-model="cMod.course.professor2">
-                                </div>
-
-                                <div class="one wide field">
-                                    <i class="icon add-icon ui-con" ng-class="{'plus': !cMod.editing, 'checkmark':cMod.editing}" ng-click="cMod.addCourse()"></i>
-                                </div>
-                            </div>
-                        </div>
+                    <form novalidate name="semesterForm" ng-model="semesterForm">
+                        <md-content layout="row">
+                            <md-input-container>
+                                <label>Course Code</label>
+                                <input type="text" ng-model="cMod.course.cid" required>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Name</label>
+                                <input type="text" ng-model="cMod.course.name" required>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Enrollment</label>
+                                <input type="number" ng-model="cMod.course.enrollment" required>
+                            </md-input-container>
+                            <md-input-container class="md-block basic-info">
+                                <label>Professor</label>
+                                <md-select class="basic-info-dropdown" ng-model="cMod.course.professor1" required>
+                                    <md-option ng-repeat="faculty in cMod.facultyList" value="{{faculty.email}}">
+                                        {{faculty.firstName}} {{faculty.lastName}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-button>
+                                <i class="icon add-icon ui-con" ng-class="{'plus': !cMod.editing, 'checkmark':cMod.editing}" ng-click="cMod.addCourse()"></i>
+                            </md-button>
+                        </md-content>
                     </form>
                     <md-data-table-container class="semester-table-special">
                         <table md-data-table>
@@ -65,26 +60,26 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>professor1</th>
-                                    <th>professor2</th>
+                                    <th>Enrollment</th>
+                                    <th>Professor</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="course in cMod.courses">
+                                <tr ng-repeat="course in cMod.courseList">
                                     <td> {{course.cid}} </td>
                                     <td> {{course.name}} </td>
+                                    <td> {{course.enrollment}} </td>
                                     <td> {{course.professor1}} </td>
-                                    <td> {{course.professor2}} </td>
                                     <td>
-                                        <md-button class="md-icon-button" ng-click="cMod.score = score; cMod.editing = true;">
+                                        <md-button class="md-icon-button" ng-click="cMod.course = course; cMod.editing = true;">
                                             <md-icon aria-label="Close dialog">
-                                                <i class="fa fa-pencil fa-lg ui-con"></i>
+                                                <i class="fa fa-pencil ui-con"></i>
                                             </md-icon>
                                         </md-button>
                                         <md-button class="md-icon-button" ng-click="cMod.removeScore($index)">
                                             <md-icon aria-label="Close dialog">
-                                                <i class="fa fa-trash fa-lg ui-con"></i>
+                                                <i class="fa fa-trash ui-con"></i>
                                             </md-icon>
                                         </md-button>
                                     </td>

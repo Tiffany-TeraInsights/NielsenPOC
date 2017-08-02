@@ -1,13 +1,11 @@
 <md-content class="student-switch-tainer" ng-switch="ctrl.state">
 
-    <div ng-switch-when="summary">
-        <div ng-include="'modules/student/views/summary.html'" ng-controller="SummaryCtrl as ctrl2"></div>
-    </div>
-
     <div ng-switch-when="studentProfile">
-        <div ng-include="'modules/student/views/studentProfile.html'" ng-controller="StudentCtrl as ctrl2"></div>
+        <div ng-include="'modules/student/views/studentProfile.html'" ng-controller="ProfileCtrl as ctrl2"></div>
     </div>
 
-
+    <div ng-switch-when="taApps">
+        <div ng-include="'modules/student/views/TAApplications.html'" ng-controller="TAAppCtrl as ctrl2"></div>
+    </div>
 
 </md-content>

@@ -20,6 +20,7 @@ var core=angular.module('core',[])
 .service('Courses',Courses)
 .service('StudentProfile',StudentProfile)
 .service('CourseSections',CourseSections)
+.service('Recommendations',Recommendations)
 .controller('LoginCtrl',LoginCtrl)
 
 

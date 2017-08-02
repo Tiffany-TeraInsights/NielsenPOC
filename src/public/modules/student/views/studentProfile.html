@@ -18,5 +18,60 @@
             </md-icon>
         </md-button>
     </div>
+    <md-content class="faculty-info" style="margin-left:4%; margin-right:4%;">
+        <md-content>
+            <div class="md-title faculty-section-title">Basic Information</div>
+            <md-divider></md-divider>
+            <p md-subhead>Name: {{ctrl2.user.firstName + " " + ctrl2.user.lastName}}</p>
+            <p md-subhead>Email: {{ctrl2.user.email}}</p>
+            <p md-subhead>Student Type: {{ctrl2.profile.studentType}}</p>
+            <p ng-if="{{ctrl2.profile.FSS}} == 1" md-subhead>First Semester?: Yes</p>
+            <p ng-if="{{ctrl2.profile.FSS}} == 0" md-subhead>First Semester?: No</p>
+            <p md-subhead>GPA: {{ctrl2.profile.GPA}}</p>
+        </md-content>
+
+        <md-divider></md-divider>
+        <br></br>
+        <div class="md-title student-profile-headline">Test Scores</div>
+        <md-content>
+            <md-list flex>
+                <md-subheader class="md-no-sticky">Test Names and Scores</md-subheader>
+                <md-list-item ng-repeat="tests in ctrl2.tl">
+                    <div class="md-list-item-text" style="align-content:center;" layout="row">
+                        <div style="margin-left: 10px; margin-right: 50px">{{ tests[0] }}</div>
+                        <div style="margin-left: 50px">{{ tests[1] }}</div>
+                    </div>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+        <br>
+        <div class="md-title student-profile-headline">Degrees</div>
+        <md-list flex>
+            <md-subheader class="md-no-sticky">Degree Name and Type</md-subheader>
+            <md-list-item ng-repeat="degree in ctrl2.dl">
+                <div class="md-list-item-text" style="flex:inherit;" layout="row">
+                    <div style="flex:50%">{{ degree[1] }}</div>
+                    <div style="flex:50%">{{ degree[0] }}</div>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+        <br>
+        <div class="md-title student-profile-headline">Courses Taken</div>
+
+        <md-list flex>
+            <md-subheader class="md-no-sticky">Courses Taken and Grades Earned</md-subheader>
+            <md-list-item ng-repeat="course in ctrl2.cl">
+                <div class="md-list-item-text" style="flex:inherit;" layout="row">
+                    <div style="flex:33%">{{ course[0] }}</div>
+                    <div style="flex:33%">{{ course[1] }}</div>
+                    <div style="flex:33%">{{ course[2] }}</div>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+
+    </md-content>
 
 </div>

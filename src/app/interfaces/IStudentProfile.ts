@@ -11,6 +11,8 @@ testScores: string;
 courseList: string;
 degrees: string;
 pastTAships: string;
+extra: string;
+
 }
 
 export interface IStudentProfileInstance

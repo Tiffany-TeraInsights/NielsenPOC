@@ -28,14 +28,27 @@
                     <input type="text" ng-model="cMod.faculty.email">
                 </md-input-container>
                 <md-input-container class="add-faculty-input">
-                    <label>Password</label>
-                    <input type="text" ng-model="cMod.faculty.password">
+                    <md-select class="basic-info-dropdown" ng-model="cMod.faculty.roles" placeholder="Faculty Type">
+                        <md-option ng-repeat="role in cMod.facultyRoles" value="{{role.type}}">
+                            {{role.name}}
+                        </md-option>
+                    </md-select>
                 </md-input-container>
             </md-content>
-            <md-content ngf-drop="cMod.import($file)" ngf-drag-over-class="'file-dragover'" ngf-multiple="false" ngf-allow-dir="false">
-                <md-icon aria-label="Close dialog">
-                    <i class="fa fa-upload">Upload CSV File</i>
-                </md-icon>
+            <md-divider></md-divider>
+            <h5 style="text-align: -webkit-center;">OR</h5>
+            <md-divider></md-divider>
+            <md-content>
+                <md-select class="basic-info-dropdown" ng-model="cMod.selectedType" style="margin:inherit; flex:1;" placeholder="Faculty Type">
+                    <md-option ng-repeat="type in cMod.facultyRoles" value="{{type.type}}">
+                        {{type.name}}
+                    </md-option>
+                </md-select>
+                <md-content ngf-drop="cMod.import($file)" ngf-drag-over-class="'file-dragover'" ngf-multiple="false" ngf-allow-dir="false" style="min-height:50px; overflow:visible;">
+                    <md-icon aria-label="Close dialog">
+                        <i style="margin-left: 600%;margin-top: 70%;" class="fa fa-upload">Drag and Drop CSV File</i>
+                    </md-icon>
+                </md-content>
             </md-content>
     </md-dialog-content>
     <md-dialog-actions class="order-fix" layout="row">

@@ -9,7 +9,6 @@ import * as Sequelize from 'sequelize';
 import * as Promise from 'bluebird';
 import * as uuid from 'node-uuid';
 
-import * as ITodos from '../interfaces/ITodos';
 import * as ISemester from '../interfaces/ISemester';
 import * as ICourse from '../interfaces/ICourse';
 

@@ -20,9 +20,14 @@ username: username,
 password: password
 }).then((data: Object) => {
 self.user=<IUser>data['data'];
+if(self.user.roles=="admin") {
 self.loggedIn=true;
+}
+else {
+self.loggedIn=false;
+}
 return;
-})
+});
 }
 
 loginStudent(username: string,password: string) {
@@ -33,6 +38,31 @@ username: username,
 password: password
 }).then((data: Object) => {
 self.user=<IUser>data['data'];
+if(self.user.roles=="student") {
+self.loggedIn=true;
+}
+else {
+self.loggedIn=false;
+}
+self.loggedIn=true;
+return;
+})
+}
+
+loginFaculty(username: string,password: string) {
+var self=this;
+
+return self.$http.post('/loginFaculty',{
+username: username,
+password: password
+}).then((data: Object) => {
+self.user=<IUser>data['data'];
+if(self.user.roles=="faculty"||"professor"||"advisor") {
+self.loggedIn=true;
+}
+else {
+self.loggedIn=false;
+}
 self.loggedIn=true;
 return;
 })

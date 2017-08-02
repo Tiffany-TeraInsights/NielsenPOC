@@ -1,0 +1,73 @@
+<md-dialog style="min-height:50%; min-width:70%;">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Student Profile</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cMod.accept()">
+                <md-icon aria-label="Close dialog">
+                    <i class="fa fa-times"></i>
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content style="margin:5%;">
+        <md-content class="student-profile-viewt">
+            <div class="md-title student-profile-headline">Basic Information</div>
+            <div md-subhead>Name: {{cMod.getUserName(cMod.app)}}</div>
+            <div md-subhead>Student Type: {{cMod.getUserType(cMod.app)}}</div>
+            <div md-subhead>GPA: {{cMod.getUserGPA(cMod.app)}}</div>
+            <md-divider></md-divider>
+
+            <div class="md-title student-profile-headline">Degrees</div>
+            <md-data-table-container class="semester-table faculty-info">
+                <table md-table>
+                    <thead md-head>
+                        <th>Degree Type</th>
+                        <th>Degree Title</th>
+                    </thead>
+                    <tbody .md-body-1>
+                        <tr ng-repeat="degree in cMod.degrees">
+                            <td>{{degree[0]}}</td>
+                            <td>{{degree[1]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
+
+            <div class="md-title student-profile-headline">Test Scores</div>
+            <md-data-table-container class="semester-table faculty-info">
+                <table md-table>
+                    <thead md-head>
+                        <th>Test Type</th>
+                        <th>Score</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="test in cMod.tests">
+                            <td>{{test[0]}}</td>
+                            <td>{{test[1]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
+
+            <div class="md-title student-profile-headline">Courses Taken</div>
+            <md-data-table-container class="semester-table faculty-info">
+                <table md-table>
+                    <thead md-head>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Grade Earned</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="courses in cMod.courses">
+                            <td>{{courses[0]}}</td>
+                            <td>{{courses[1]}}</td>
+                            <td>{{courses[2]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
+        </md-content>
+    </md-dialog-content>
+</md-dialog>

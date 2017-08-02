@@ -47,6 +47,20 @@ this.Notify.error('Login Failed. '+error.statusText);
 });
 }
 
+loginFaculty(username: string,password: string) {
+this.Auth.loginFaculty(username,password)
+.then((rep) => {
+console.log("Logged in");
+this.state="faculty-main"
+this.Notify.info('Login Successful');
+console.log(this.Auth);
+},(error) => {
+console.log("Logged failed: ",error);
+this.state="undefined"
+this.Notify.error('Login Failed. '+error.statusText);
+});
+}
+
 static $inject=['$sce','Notify','Auth'];
 
 constructor(

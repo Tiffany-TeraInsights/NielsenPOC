@@ -5,8 +5,10 @@ import { rename } from 'fs';
 import * as Sequelize from 'sequelize';
 
 export interface ICourseSection {
+id: string;
 sid: string;
 cid: string;
+cName: string;
 eid: string;
 BRPD: string;
 enrollment: number;

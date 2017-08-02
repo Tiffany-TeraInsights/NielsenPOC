@@ -9,6 +9,9 @@ var student=angular.module('GatorTA',[
 
 .controller("StudentCtrl",StudentCtrl)
 .controller("SummaryCtrl",SummaryCtrl)
+.controller("ProfileCtrl",ProfileCtrl)
 .controller("StudentProfileCtrl",StudentProfileCtrl)
+.controller("TAAppCtrl",TAAppCtrl)
+.controller("AppAdditionCtrl",AppAdditionCtrl)
 
 }

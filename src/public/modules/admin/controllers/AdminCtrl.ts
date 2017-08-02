@@ -8,7 +8,7 @@ export class AdminCtrl {
 private userName: string="t.dixon@ufl.edu"; // displayed name o the user
 //private user: core.Auth
 //private userName: string=this.user.email;
-private state: string="admissions"; // code name of the state
+private state: string="courses"; // code name of the state
 private stateName: string; // displayed name of the state
 private password: string; // password for the key uploaded
 /**
@@ -16,9 +16,6 @@ private password: string; // password for the key uploaded
 */
 updateState() {
 switch(this.state) {
-case 'summary':
-this.stateName="Summary";
-break;
 case 'students':
 this.stateName="Student Management";
 break;
@@ -30,6 +27,9 @@ this.stateName='Faculty Management';
 break;
 case 'semesters':
 this.stateName='Semester Management';
+break;
+case 'courses':
+this.stateName="TA Management";
 break;
 }
 }

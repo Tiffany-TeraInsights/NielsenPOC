@@ -1,0 +1,25 @@
+<md-sidenav class="md-whiteframe-z1 md-open student-sn" md-component-id='left' md-is-locked-open="true">
+    <md-toolbar class="md-tall">
+        <span flex></span>
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+            <md-icon>
+                <img class="fa fa-user fa-2x"></i>
+            </md-icon>
+            <span></span>
+            <div class="md-title">{{ctrl2.user.firstName}} {{ctrl2.user.lastName}}</div>
+            <div class="md-subhead">{{ctrl2.user.email}}</div>
+        </div>
+    </md-toolbar>
+    <md-content class="fake-menu">
+        <md-subheader>Courses for Current Semester</md-subheader>
+        <md-menu-divider></md-menu-divider>
+        <md-content ng-repeat="courses in ctrl2.coursesForSelf">
+            <md-menu-item style="min-height: 80px;">
+                <md-button class="md-list-item-text" ng-click="ctrl2.select(courses)">
+                    <h5>{{courses.cid}}</h5>
+                    <p>{{courses.name}}</p>
+                </md-button>
+            </md-menu-item>
+        </md-content>
+    </md-content>
+</md-sidenav>

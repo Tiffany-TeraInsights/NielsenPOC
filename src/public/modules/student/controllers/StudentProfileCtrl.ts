@@ -1,4 +1,3 @@
-
 /// <reference path="../../../../typings/index.d.ts"/>
 
 module student {
@@ -42,6 +41,7 @@ private firstName;
 private lastName;
 private CourseList: core.ICourse[]=[];
 private individualCourse: string=null;
+private individualName: string=null;
 private individualGrade: string=null;
 private individualDegree: string=null;
 private individualDL: string=null;
@@ -83,14 +83,14 @@ this.$mdDialog.cancel();
 }
 
 appendCourseList() {
-this.studentProfile.courseList=this.studentProfile.courseList+this.individualCourse+":"+this.individualGrade+";";
+this.studentProfile.courseList=this.studentProfile.courseList+this.individualCourse+":"+this.individualName+":"+this.individualGrade+";";
 this.getCourseList();
 }
 
 updateCourseList() {
 var list=this.studentProfile.courseList;
 this.cl.forEach(function(v) {
-list=list+v[0]+":"+v[1]+";"
+list=list+v[0]+":"+v[1]+":"+v[2]+";"
 });
 this.studentProfile.courseList=list;
 }
@@ -216,9 +216,48 @@ this.CourseList=cl3;
 });
 this.getCourseList();
 this.getDegreeList();
+this.getTestList();
 this.user=this.Auth.getLoggedInUser();
 this.firstName=this.user.firstName;
 this.lastName=this.user.lastName;
+}
+
+import(file: any) {
+var self=this;
+var bulkData;
+self.individualCourse="";
+self.individualName="";
+self.individualGrade="";
+csvFileReader(file,(data: string) => {
+bulkData=data;
+for(var i=0;i<data.length;++i) {
+self.CourseList.forEach(function(course) {
+if(course.cid==data[i][0]&&course.name==data[i][2]) {
+self.individualCourse=data[i][0];
+self.individualName=data[i][2];
+self.individualGrade=data[i][1];
+self.appendCourseList();
+self.individualCourse="";
+self.individualName="";
+self.individualGrade="";
+}
+});
+if(self.individualCourse=="") {
+var sp=data[i][0].split("");
+var l="";
+for(var j=0;j<3;++j) {
+l=l+sp[j];
+}
+if(l==("CIS"||"CNT"||"CEN"||"COP"||"CAP"||"CDA"||"EGN")) {
+self.individualCourse=data[i][0];
+self.individualName=data[i][2];
+self.individualGrade=data[i][1];
+self.appendCourseList();
+}
+else { }
+}
+}
+});
 }
 
 static $inject=['studentProfile','$mdSidenav','$mdDialog','$http','Auth','Notify','Courses'];

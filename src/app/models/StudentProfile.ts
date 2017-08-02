@@ -22,7 +22,7 @@ getAll() {
 return this.schema.all();
 }
 
-addStudentProfile(email: string,studentType: string,FSS: boolean,GPA: string,testScores: string,courseList: string,degrees: string,pastTAships: string) {
+addStudentProfile(email: string,studentType: string,FSS: boolean,GPA: string,testScores: string,courseList: string,degrees: string,pastTAships: string,extra: string) {
 return this.schema.create({
 email: email,
 studentType: studentType,
@@ -31,11 +31,12 @@ GPA: GPA,
 testScores: testScores,
 courseList: courseList,
 degrees: degrees,
-pastTAships: pastTAships
+pastTAships: pastTAships,
+extra: extra
 });
 }
 
-update(email: string,studentType: string,FSS: boolean,GPA: string,testScores: string,courseList: string,degrees: string,pastTAships: string) {
+update(email: string,studentType: string,FSS: boolean,GPA: string,testScores: string,courseList: string,degrees: string,pastTAships: string,extra: string) {
 return this.schema.update({
 email: email,
 studentType: studentType,
@@ -44,7 +45,8 @@ GPA: GPA,
 testScores: testScores,
 courseList: courseList,
 degrees: degrees,
-pastTAships: pastTAships
+pastTAships: pastTAships,
+extra: extra
 },{
 where: { email: email },
 }).then((res) => {
@@ -85,6 +87,10 @@ this.schema=db.define<IStudentProfile.IStudentProfileInstance,IStudentProfile.IS
 "allowNull": true
 },
 "pastTAships": {
+"type": Sequelize.STRING,
+"allowNull": true
+},
+"extra": {
 "type": Sequelize.STRING,
 "allowNull": true
 }

@@ -37,13 +37,13 @@
                     </md-select>
                 </md-input-container>
                 <md-input-container class="md-block basic-info">
-                    <md-checkbox ng-model="cMod.studentProfile.FSS" aria-label="Checkbox 2" ng-true-value="'yup'" ng-false-value="'nope'" style="opacity:100; margin:inherit; left:0%;">
+                    <md-checkbox ng-model="cMod.studentProfile.FSS" aria-label="Checkbox 2" ng-true-value="true" ng-false-value="false" style="opacity:100; margin:inherit; left:0%;">
                         First Semester Student?
                     </md-checkbox>
                 </md-input-container>
                 <md-input-container class="md-block basic-info">
                     <label>GPA</label>
-                    <input type="number" ng-model="cMod.studentProfile.GPA">
+                    <input type="text" ng-model="cMod.studentProfile.GPA">
                 </md-input-container>
             </md-content>
         </form>
@@ -172,11 +172,17 @@
                     </md-button>
                 </md-content>
             </form>
+            <md-content ngf-drop="cMod.import($file)" ngf-drag-over-class="'file-dragover'" ngf-multiple="false" ngf-allow-dir="false">
+                <md-icon aria-label="Close dialog" style="margin-left: 35%; margin-bottom: 5%;">
+                    <i class="fa fa-upload">Upload CSV File Course List</i>
+                </md-icon>
+            </md-content>
             <md-data-table-container class="semester-table-special">
                 <table md-data-table>
                     <thead>
                         <tr>
-                            <th>Course Taken</th>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
                             <th>Grade</th>
                             <th>Actions</th>
                         </tr>
@@ -185,6 +191,7 @@
                         <tr ng-repeat="course in cMod.cl">
                             <td> {{course[0]}} </td>
                             <td> {{course[1]}} </td>
+                            <td> {{course[2]}}</td>
                             <td>
                                 <md-button class="md-icon-button" ng-click="cMod.deleteCourse(course)">
                                     <md-icon aria-label="Close dialog">
@@ -197,6 +204,16 @@
                     </tbody>
                 </table>
             </md-data-table-container>
+        </md-content>
+        <md-content style="overflow:visible">
+            <h3 class="md-headline" style="margin-top: 4%">Additional Information</h3>
+            <p>This section is provided for any additional information relevant to applicability for the TA position This may include information such as past and current research, outside study, and projects.</p>
+
+            <md-input-container style="min-width:90%;">
+                <label style="margin-bottom:2%;">Additional Information</label>
+                <textarea style="min-width:90%;" ng-model="cMod.taApp.description" md-maxlength="10000"></textarea>
+            </md-input-container>
+
         </md-content>
     </md-dialog-content>
     <md-dialog-actions class="order-fix" layout="row">

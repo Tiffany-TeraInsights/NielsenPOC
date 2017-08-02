@@ -1,0 +1,119 @@
+<md-content layout="row" style="border-top: 1px solid #E1E1E1;">
+    <md-content class="semester-list faculty-list" style="max-height:89vh">
+        <div layout="row">
+            <div class="md-subhead" style="margin:auto">{{ctrl2.studentAmount}} Students </div>
+            <md-button class="md-icon-button" aria-label="Add" ng-click="ctrl2.openStudentDialog()">
+                <md-icon><i class="fa fa-plus ui-con"></i></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
+                <md-icon><i class="fa fa-refresh ui-con"></i></md-icon>
+            </md-button>
+        </div>
+        <md-content>
+            <md-input-container style="display:flex" layout="row">
+                <md-icon><i class="fa fa-search ui-con" style="margin-left:15px;"></i></md-icon>
+                <input style="max-width:250px; margin:auto;" type="text" name="search">
+            </md-input-container>
+        </md-content>
+        <md-divider></md-divider>
+        <md-list flex="20" class="faculty-listy">
+            <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="student in ctrl2.students">
+                <div class="md-list-item-text" ng-click="ctrl2.getInfoForStudent(student)">
+                    <h3>{{student.firstName+" "+student.lastName}}</h3>
+                    <p>{{student.email}}</p>
+                </div>
+                <div>
+                    <md-button class="md-icon-button" style="margin:auto" aria-label="Add" ng-click="ctrl2.openStudentDialog(student)">
+                        <md-icon><i class="fa fa-edit ui-con"></i></md-icon>
+                    </md-button>
+                </div>
+                <div>
+                    <md-button class="md-icon-button" style="margin:auto" aria-label="Add" ng-click="ctrl2.removeStudent(student)">
+                        <md-icon><i class="fa fa-trash ui-con"></i></md-icon>
+                    </md-button>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <md-tabs style="width:70%;">
+        <md-tab label="Student Profile" style="overflow:scroll">
+            <md-content class="faculty-details">
+                <div class="md-title student-profile-headline">Basic Information</div>
+                <div md-subhead>Name: {{ctrl2.selected.firstName}} {{ctrl2.selected.lastName}}</div>
+                <div md-subhead>Student Type: {{ctrl2.studentP.studentType}}</div>
+                <div md-subhead>Email: {{ctrl2.selected.email}}</div>
+                <br>
+                <md-divider></md-divider>
+
+                <div class="md-title student-profile-headline">Test Scores</div>
+                <md-data-table-container class="semester-table faculty-info">
+                    <table md-table>
+                        <thead md-head>
+                            <th>Test Type</th>
+                            <th>Test Score</th>
+                        </thead>
+                        <tbody .md-body-1>
+                            <tr ng-repeat="tests in ctrl2.studentTests">
+                                <td>{{tests[0]}}</td>
+                                <td>{{tests[1]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-data-table-container>
+
+                <div class="md-title student-profile-headline">Degrees</div>
+                <md-data-table-container class="semester-table faculty-info">
+                    <table md-table>
+                        <thead md-head>
+                            <th>Degree Type</th>
+                            <th>Degree Title</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="degrees in ctrl2.StudentDegrees">
+                                <td>{{degrees[0]}}</td>
+                                <td>{{degrees[1]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-data-table-container>
+
+                <div class="md-title student-profile-headline">Courses Taken</div>
+                <md-data-table-container class="semester-table faculty-info">
+                    <table md-table>
+                        <thead md-head>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Grade Earned</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="courses in ctrl2.studentCourses">
+                                <td>{{courses[0]}}</td>
+                                <td>{{courses[1]}}</td>
+                                <td>{{courses[2]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-data-table-container>
+            </md-content>
+        </md-tab>
+        <md-tab label="Student Applications">
+            <md-card class="course-list" ng-repeat="app in ctrl2.studentApps" style="max-width:40%;" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-title">{{app.cid}}</span>
+                        <span class="md-subhead">Requested Section: {{app.sid}}</span>
+                        <span class="md-subhead">{{ctrl2.selected.userType}}</span>
+                        <span ng-if="ctrl2.hasTakenCourse(app) == true" class="md-body-1">Taken Course <i class="fa fa-check"></i></span>
+                        <span ng-if="ctrl2.hasTakenCourse(app) == false" class="md-body-1">Taken Course <i class="fa fa-times"></i></span>
+                        <span ng-if="app.faculty == 'denied'" style="color:red">Rejected</span>
+                        <span ng-if="app.faculty == ''" style="color:blue">Pending</span>
+                        <span ng-if="app.faculty != ''" style="color:green">Recommended by {{app.faculty}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+        </md-tab>
+        <md-tab label="Current and Past TA Positions">
+
+        </md-tab>
+    </md-tabs>
+</md-content>

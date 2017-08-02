@@ -1,0 +1,65 @@
+<md-dialog aria-label="About" class="student-modal" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Create Application</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cMod.cancel()">
+                <md-icon aria-label="Close dialog">
+                    <i class="fa fa-times"></i>
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="student-modal-content" layout="column" layout-padding style="overflow:scroll;">
+        <label class="md-subhead" style="margin-top: 4%">Your student profile will also be submitted with your application, so please make sure it is up to date before submitting.</label>
+        <md-content style="overflow:visible">
+            <form>
+                <md-content layout="row" layout-padding>
+                    <md-input-container class="md-block basic-info">
+                        <label>CISE Course</label>
+                        <md-select class="basic-info-dropdown" ng-model="cMod.selectedCourse">
+                            <md-option ng-repeat="courses in cMod.courseList" value="{{courses.id}}">
+                                {{courses.cid}} {{courses.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block basic-info">
+                        <label>TA Type</label>
+                        <md-select class="basic-info-dropdown" ng-model="cMod.taApp.taType" placeholder="TA Type">
+                            <md-option ng-repeat="taTypes in cMod.TATypes" value="{{taTypes.type}}">
+                                {{taTypes.type}}
+                            </md-option>
+                            <md-tooltip>{{taTypes.description}}</md-tooltip>
+                        </md-select>
+                    </md-input-container>
+                </md-content>
+                <md-content style="margin-left:5%">
+                    <label style="margin-bottom:2%;">Preferred Section</label>
+                    <div ng-repeat="courseSections in cMod.getSectionsForCourse(cMod.selectedCourse)">
+                        <md-checkbox style="left:0px; opacity:100; position:relative;" ng-model="cMod.taApp.sid" ng-true-value="'{{courseSections.sid}}'">
+                            {{ courseSections.sid }}
+                        </md-checkbox>
+                        <div ng-repeat="sectionDetails in ctrl2.sectionDetails[courseSections.id]" layout="row">
+                            <p>{{sectionDetails[0]}}</p>
+                            <p>{{sectionDetails[1]}}</p>
+                            <p>{{sectionDetails[2]}}</p>
+                            <p>{{sectionDetails[3]}}</p>
+                            <p>Hello</p>
+                        </div>
+                    </div>
+                </md-content>
+                <md-content style="margin-left:5%">
+                    <md-input-container style="min-width:90%;">
+                        <label style="margin-bottom:2%;">Additional Notes</label>
+                        <textarea style="min-width:90%;" ng-model="cMod.taApp.description" md-maxlength="500"></textarea>
+                    </md-input-container>
+                </md-content>
+            </form>
+        </md-content>
+    </md-dialog-content>
+    <md-dialog-actions class="order-fix" layout="row">
+        <span flex></span>
+        <md-button md-autofocus ng-click="cMod.accept()">Submit</md-button>
+        <md-button ng-click="cMod.cancel()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

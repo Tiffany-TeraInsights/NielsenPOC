@@ -1,0 +1,86 @@
+<div>
+    <div class="student-profile">
+        <div class="md-headline student-profile-headline">Your TA Applications</div>
+        <md-button class="md-icon-button md-button md-ink-ripple" ng-click="ctrl2.AddEditDialog()">
+            <md-icon aria-label="Edit">
+                <i class="fa fa-plus  ui-con"></i>
+                <md-tooltip md-direction="top" class="large" style="position: absolute;">
+                    Add
+                </md-tooltip>
+            </md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
+            <md-icon><i class="fa fa-refresh ui-con"></i></md-icon>
+            <md-tooltip md-direction="top" class="large" style="position: absolute;">
+                Refresh
+            </md-tooltip>
+        </md-button>
+    </div>
+
+    <md-content class="faculty-details">
+        <md-content class="faculty-info">
+            <div class="md-title faculty-section-title">Basic Information</div>
+            <md-divider></md-divider>
+            <p md-subhead>Name: {{ctrl2.user.firstName + " " + ctrl2.user.lastName}}</p>
+            <p md-subhead>Email: {{ctrl2.user.email}}</p>
+            <p md-subhead>Student Type: {{ctrl2.userProfile.studentType}}</p>
+            <p ng-if="{{ctrl2.userProfile.FSS}} == 1" md-subhead>First Semester?: Yes</p>
+            <p ng-if="{{ctrl2.userProfile.FSS}} == 0" md-subhead>First Semester?: No</p>
+            <p md-subhead>GPA: {{ctrl2.userProfile.GPA}}</p>
+
+            <br>
+            <br>
+        </md-content>
+        <div class="md-title faculty-section-title">Approved Applications</div>
+        <md-divider></md-divider>
+        <md-content>
+            <md-list layout="row" style="flex-wrap:wrap;" class="fixedRows">
+                <md-list-item style="flex:50%" ng-repeat="apps in ctrl2.findApprovedApps()">
+                    <md-card style="width:400px">
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-headline">{{apps.cid}}</span>
+                                <span class="md-subhead">Requested Section: {{apps.sid}}</span>
+                                <span class="md-subhead">{{apps.taType}}</span>
+                                <span class="md-subhead">{{apps.description}}</span>
+                                <span class="md-subhead" style="color:green" ng-if="apps.approved != ''">Assigned</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                    </md-card>
+                </md-list-item>
+            </md-list>
+        </md-content>
+        <br>
+        <br>
+        <div class="md-title faculty-section-title">Pending Applications</div>
+        <md-divider></md-divider>
+        <md-content>
+            <md-list layout="row" style="flex-wrap:wrap;" class="fixedRows">
+                <md-list-item style="flex:50%" ng-repeat="apps in ctrl2.findPendingApps()">
+                    <md-card style="width:400px;">
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-headline">{{apps.cid}}</span>
+                                <span class="md-subhead">Requested Section: {{apps.sid}}</span>
+                                <span class="md-subhead">{{apps.taType}}</span>
+                                <span class="md-subhead">{{apps.description}}</span>
+                                <span class="md-subhead" style="color:red" ng-if="apps.faculty == ''">Not Recommended</span>
+                                <span class="md-subhead" style="color:green" ng-if="apps.faculty != ''">Recommended</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-actions layout="row" layout-align="end center">
+                            <md-button ng-click="ctrl2.delete(apps)">
+                                <i class="fa fa-trash fa-2x"></i>
+                                <md-tooltip md-direction="top" class="large" style="position: absolute;">
+                                    Delete
+                                </md-tooltip>
+                            </md-button>
+                        </md-card-actions>
+                    </md-card>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-content>
+    </md-content>
+
+</div>

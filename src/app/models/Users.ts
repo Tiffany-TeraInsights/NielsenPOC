@@ -62,6 +62,21 @@ cid: cid
 });
 }
 
+update(firstName: string,lastName: string,email: string,password: string,roles: string,cid: string) {
+return this.schema.update({
+firstName: firstName,
+lastName: lastName,
+email: email,
+password: password,
+roles: roles,
+cid: cid,
+},{
+where: { email: email },
+}).then((res) => {
+return this.schema.findById(email);
+});
+}
+
 checkPasswd(email: string,password: string) {
 return this.schema.find({
 where: { email: email }

@@ -63,7 +63,43 @@ private listByEmail: { [email: string]: IUser };
 
 getFaculty(): IUser[] {
 return this.list.filter((user) => {
-return user.roles=='faculty';
+return user.roles==('admin'||'faculty'||'professor'||'hr'||'advisor');
+});
+}
+
+getProfessors(): IUser[] {
+return this.list.filter((user) => {
+return user.roles=='professor';
+});
+}
+
+getAdmininstators() {
+return this.list.filter((user) => {
+return user.roles=='admin';
+});
+}
+
+getHR() {
+return this.list.filter((user) => {
+return user.roles=='hr';
+});
+}
+
+getAdvisors() {
+return this.list.filter((user) => {
+return user.roles=='advisor';
+});
+}
+
+getStudents(): IUser[] {
+return this.list.filter((user) => {
+return user.roles=='student';
+});
+}
+
+getUser(id: string) {
+return this.list.filter((user) => {
+return user.email==id;
 });
 }
 
@@ -82,9 +118,21 @@ return defer.promise;
 }
 
 update(user: IUser) {
-return this.resource.update({
-id: user.id
-},user).$promise;
+let defer=this.$q.defer();
+console.log("hi");
+console.log(user);
+this.resource.update({ id: user.email },user,
+(up: IUser) => {
+console.log("update"+up);
+defer.resolve(up); undefined
+},
+(err) => { defer.reject(err); });
+return defer.promise;
+}
+
+remove(user: IUser) {
+console.log("User Email = "+user.email);
+return this.resource.remove({ id: user.email }).$promise;
 }
 
 refresh() {

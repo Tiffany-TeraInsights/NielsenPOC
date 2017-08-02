@@ -13,6 +13,11 @@ var admin=angular.module('GatorTA',[
 .controller("SemesterCreateCtrl",SemesterCreateCtrl)
 .controller("FacultyCtrl",FacultyCtrl)
 .controller("AddFacultyCtrl",AddFacultyCtrl)
+.controller("TAManagementCtrl",TAManagementCtrl)
+.controller("StudentsCtrl",StudentsCtrl)
+.controller("AddStudentsCtrl",AddStudentsCtrl)
+.controller("ConfirmationMsg",ConfirmationMsg)
+.controller("StudentDetailCtrl",StudentDetailCtrl)
 
 
 }

@@ -34,8 +34,9 @@ eid: eid
 });
 }
 
-addCourse(cid: string,eid: string,name: string,sections: string,credits: number,exam: string,cf: string,eep: boolean,wm: string,ge: string,enrollment: number,professor1: string,professor2: string) {
+addCourse(id: string,cid: string,eid: string,name: string,sections: string,credits: number,exam: string,cf: string,eep: boolean,wm: string,ge: string,enrollment: number,professors: string) {
 return this.schema.create({
+id: id,
 cid: cid,
 eid: eid,
 name: name,
@@ -47,19 +48,19 @@ eep: eep,
 wm: wm,
 ge: ge,
 enrollment: enrollment,
-professor1: professor1,
-professor2: professor2
+professors: professors,
 });
 }
 
-removeCourse(cid: string) {
+removeCourse(id: string) {
 return this.schema.destroy({
-where: { cid: cid }
+where: { id: id }
 });
 }
 
-update(cid: string,eid: string,name: string,sections: string,credits: number,exam: string,cf: string,eep: boolean,wm: string,ge: string,enrollment: number,professor1: string,professor2: string) {
+update(id: string,cid: string,eid: string,name: string,sections: string,credits: number,exam: string,cf: string,eep: boolean,wm: string,ge: string,enrollment: number,professors: string) {
 return this.schema.update({
+id: id,
 cid: cid,
 eid: eid,
 name: name,
@@ -71,15 +72,14 @@ eep: eep,
 wm: wm,
 ge: ge,
 enrollment: enrollment,
-professor1: professor1,
-professor2: professor2
+professors: professors,
 },{
 where: {
-cid: cid,
+id: id,
 },
 fields: ['completed']
 }).then((res) => {
-return this.schema.findById(cid);
+return this.schema.findById(id);
 });
 }
 
@@ -92,10 +92,15 @@ users.belongsTo(this.schema);
 
 constructor(private db: Sequelize.Connection) {
 this.schema=db.define<ICourse.ICourseInstance,ICourse.ICourse>("Course",{
+"id": {
+"type": Sequelize.STRING(64),
+"allowNull": false,
+"primaryKey": true
+},
 "cid": {
 "type": Sequelize.UUID,
 "allowNull": false,
-"primaryKey": true
+"primaryKey": false
 },
 'eid': {
 "type": Sequelize.STRING(64),
@@ -138,11 +143,7 @@ this.schema=db.define<ICourse.ICourseInstance,ICourse.ICourse>("Course",{
 "type": Sequelize.INTEGER,
 "allowNull": true
 },
-"professor1": {
-"type": Sequelize.STRING(64),
-"allowNull": false
-},
-"professor2": {
+"professors": {
 "type": Sequelize.STRING(64),
 "allowNull": true
 }

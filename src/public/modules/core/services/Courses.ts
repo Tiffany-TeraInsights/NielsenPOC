@@ -1,6 +1,7 @@
 module core {
 
 export interface ICourse extends ng.resource.IResource<ICourse> {
+id: string;
 cid: string;
 eid: string;
 name: string;
@@ -12,8 +13,7 @@ eep: boolean;
 wm: string;
 ge: string;
 enrollment: number;
-professor1: string;
-professor2: string;
+professors: string;
 }
 
 interface ICourseResource extends ng.resource.IResourceClass<ICourse> {
@@ -62,7 +62,7 @@ return defer.promise;
 
 updateCourse(courseI: ICourse) {
 let defer=this.$q.defer();
-this.resource.update({ id: courseI.cid },courseI,
+this.resource.update({ id: courseI.id },courseI,
 (course: ICourse) => { defer.resolve(course); },
 (err) => { defer.reject(err); });
 return defer.promise;
@@ -82,9 +82,15 @@ defer.resolve(courses);
 return defer.promise;
 }
 
+getCoursesForSemester(semester: string) {
+return this.list.filter((courses) => {
+return ((courses.eid==semester));
+})
+}
+
 getCoursesForFaculty(faculty: core.IUser) {
 return this.list.filter((course) => {
-return ((course.professor1||course.professor2)==faculty.firstName+" "+faculty.lastName);
+return ((course.professors)==faculty.firstName+" "+faculty.lastName);
 });
 }
 

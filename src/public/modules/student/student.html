@@ -50,14 +50,12 @@
 
     <md-content ng-include="'modules/core/views/studentLogin.html'" ng-if="!ctrl.Auth.loggedIn" ng-controller="LoginCtrl as lCtrl"></md-content>
 
-    <md-toolbar ng-if="ctrl.Auth.loggedIn" class="main-bar">
+    <!-- <md-toolbar ng-if="ctrl.Auth.loggedIn" class="main-bar">
         <div class="md-toolbar-tools">
             <div class="menu" ng-include="'modules/student/views/menu.html'"></div>
             <h1 class="main-text">{{ctrl.stateName}}</h1>
-            <span flex></span>
-            <div class="logged-user">{{ctrl.userName}}</div>
         </div>
-    </md-toolbar>
+    </md-toolbar> -->
 
     <div class="student-container">
         <div class="student-container" ng-include="'modules/student/views/sidenav.html'" ng-if="ctrl.Auth.loggedIn"></div>
@@ -65,12 +63,15 @@
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js" integrity="sha256-YUCh5+Y7KLYFkfuGkmKTo2Bsm2+RHjbG7aefaPF/cBg=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.1/angular-materialize.min.js" integrity="sha256-Gj4eDejApF7RbvsodmqdIP04aLC9sjKZ7YOkTqV7khA=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="modules/core/utils/LoadData.js"></script>
     <script type="text/javascript" src="modules/core/services/Auth.js"></script>
     <script type="text/javascript" src="modules/core/services/Notify.js"></script>
     <script type="text/javascript" src="modules/core/services/Users.js"></script>
     <script type="text/javascript" src="modules/core/services/Semesters.js"></script>
     <script type="text/javascript" src="modules/core/services/Courses.js"></script>
+    <script type="text/javascript" src="modules/core/services/CourseSections.js"></script>
     <script type="text/javascript" src="modules/core/services/StudentProfile.js"></script>
+    <script type="text/javascript" src="modules/core/services/Recommendations.js"></script>
     <script type="text/javascript" src="modules/core/controllers/LoginCtrl.js"></script>
     <script type="text/javascript" src="modules/core/controllers/RegisterCtrl.js"></script>
     <script type="text/javascript" src="modules/admin/controllers/AdminCtrl.js"></script>
@@ -83,7 +84,10 @@
     <script type="text/javascript" src="modules/admin/controllers/AddStudentsCtrl.js"></script>
     <script type="text/javascript" src="modules/admin/controllers/CoursesCtrl.js"></script>
     <script type="text/javascript" src="modules/student/controllers/StudentCtrl.js"></script>
+    <script type="text/javascript" src="modules/student/controllers/ProfileCtrl.js"></script>
     <script type="text/javascript" src="modules/student/controllers/StudentProfileCtrl.js"></script>
+    <script type="text/javascript" src="modules/student/controllers/TAAppCtrl.js"></script>
+    <script type="text/javascript" src="modules/student/controllers/AppAdditionCtrl.js"></script>
     <script type="text/javascript" src="modules/student/controllers/SummaryCtrl.js"></script>
 
     <script type="text/javascript" src="modules/core/Core.js"></script>

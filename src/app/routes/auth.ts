@@ -61,6 +61,27 @@ res.send(400).send(err);
 });
 }
 
+export function loginFaculty(req: express.Request,res: express.Response) {
+var userEmail=req.user.email;
+
+Users.getAccountByUserid(userEmail)
+.then((user) => {
+console.log("User is "+user);
+/*res.json(user);
+},(err) => {
+res.status(400).send(err);
+})*/
+if(user.roles=="faculty"||"professor"||"advisor") {
+res.json(user);
+}
+else {
+res.send(400).send("User Unauthorized");
+}},(err) => {
+res.send(400).send(err);
+});
+}
+
+
 export function loginStudent(req: express.Request,res: express.Response) {
 var userEmail=req.user.email;
 

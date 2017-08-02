@@ -3,15 +3,8 @@
 
     </md-toolbar>
     <md-content class="fake-menu">
-        <md-menu-divider></md-menu-divider>
         <md-menu-item>
-            <md-button ng-click="ctrl.selectView('admissions')">
-                <i class="fa fa-users md-menu-icon"></i>
-                <p class="md-menu-text">Summary</p>
-            </md-button>
-        </md-menu-item>
-        <md-menu-item>
-            <md-button ng-click="ctrl.selectView('reviews')">
+            <md-button ng-click="ctrl.selectView('students')">
                 <i class="fa fa-search md-menu-icon"></i>
                 <p class="md-menu-text">Student Management</p>
             </md-button>
@@ -29,9 +22,16 @@
             </md-button>
         </md-menu-item>
         <md-menu-item>
-            <md-button ng-click="ctrl.selectView('summary')">
+            <md-button ng-click="ctrl.selectView('courses')">
                 <i class="fa fa-file-text-o md-menu-icon"></i>
                 <p class="md-menu-text">Course TA Management</p>
+            </md-button>
+        </md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+            <md-button ng-click="">
+                <i class="fa fa-sign-out md-menu-icon"></i>
+                <p class="md-menu-text">Logout</p>
             </md-button>
         </md-menu-item>
     </md-content>

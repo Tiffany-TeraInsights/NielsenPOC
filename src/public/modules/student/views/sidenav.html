@@ -1,6 +1,12 @@
 <md-sidenav class="md-whiteframe-z1 md-open student-sn" md-component-id='left' md-is-locked-open="true">
-    <md-toolbar class="md-theme-light">
-        {{ctrl.user}}
+    <md-toolbar class="md-tall">
+        <span flex></span>
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+            <h4 class="md-headline">{{ctrl.stateName}}</h4>
+            <span></span>
+            <div class="md-title">{{ctrl.user.firstName}} {{ctrl.user.lastName}}</div>
+            <div class="md-subhead">{{ctrl.user.email}}</div>
+        </div>
     </md-toolbar>
     <md-content class="fake-menu">
         <md-menu-divider></md-menu-divider>
@@ -11,40 +17,18 @@
             </md-button>
         </md-menu-item>
         <md-menu-item>
-            <md-button ng-click="ctrl.selectView('reviews')">
-                <i class="fa fa-search md-menu-icon"></i>
-                <p class="md-menu-text">Reviews</p>
-            </md-button>
-        </md-menu-item>
-        <md-menu-item>
-            <md-button ng-click="ctrl.selectView('faculty')">
-                <i class="fa fa-graduation-cap md-menu-icon"></i>
-                <p class="md-menu-text">Faculty Management</p>
-            </md-button>
-        </md-menu-item>
-        <md-menu-item>
-            <md-button ng-click="ctrl.selectView('semesters')">
-                <i class="fa fa-line-chart md-menu-icon"></i>
-                <p class="md-menu-text">Semester Management</p>
-            </md-button>
-        </md-menu-item>
-        <md-menu-item>
-            <md-button ng-click="ctrl.selectView('summary')">
+            <md-button ng-click="ctrl.selectView('taApps')">
                 <i class="fa fa-file-text-o md-menu-icon"></i>
-                <p class="md-menu-text">Summary</p>
+                <p class="md-menu-text">TA Application</p>
             </md-button>
         </md-menu-item>
-        <div class="div-ider"></div>
+
+        <md-divider></md-divider>
+        <md-subheader>Account Management</md-subheader>
         <md-menu-item>
-            <md-button ng-click="ctrl.openSecretDialog()">
-                <i class="fa fa-unlock md-menu-icon"></i>
-                <p class="md-menu-text">Set Secret</p>
-            </md-button>
-        </md-menu-item>
-        <md-menu-item>
-            <md-button ng-click="ctrl.logout()">
+            <md-button ng-click="">
                 <i class="fa fa-sign-out md-menu-icon"></i>
-                <p class="md-menu-text">Log Out</p>
+                <p class="md-menu-text">Logout</p>
             </md-button>
         </md-menu-item>
     </md-content>

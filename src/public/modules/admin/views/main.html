@@ -1,9 +1,5 @@
 <md-content class="switch-tainer" ng-switch="ctrl.state">
 
-    <div ng-switch-when="summary">
-        <div ng-include="'modules/admin/views/summary.html'" ng-controller="SummaryCtrl as ctrl2"></div>
-    </div>
-
     <div ng-switch-when="semesters">
         <div ng-include="'modules/admin/views/semesters.html'" ng-controller="SemesterCtrl as ctrl2"></div>
     </div>
@@ -13,10 +9,11 @@
     </div>
 
     <div ng-switch-when="students">
-        <div ng-include="'modules/admin/views/students.html'" ng-controller="StudentCtrl as ctrl2"></div>
+        <div ng-include="'modules/admin/views/students.html'" ng-controller="StudentsCtrl as ctrl2"></div>
     </div>
 
     <div ng-switch-when="courses">
-        <div ng-include="'modules/admin/views/courses.html'" ng-controller="CoursesCtrl as ctrl2"></div>
+        <div ng-include="'modules/admin/views/TAManagement.html'" ng-controller="TAManagementCtrl as ctrl2"></div>
     </div>
+
 </md-content>

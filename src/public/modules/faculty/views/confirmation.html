@@ -1,0 +1,21 @@
+<md-dialog style="min-width:50%;">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Confirm Action</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cMod.cancel()">
+                <md-icon aria-label="Close dialog">
+                    <i class="fa fa-times"></i>
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout="column">
+        <div class="md-subhead" style="margin:auto">Are you sure you would like to recommend this student?</div>
+    </md-dialog-content>
+    <md-dialog-actions class="order-fix" layout="row">
+        <span flex></span>
+        <md-button md-autofocus ng-click="ctrl2.recommend(app)">Accept</md-button>
+        <md-button ng-click="ctrl2.cancel()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

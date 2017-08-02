@@ -1,91 +1,128 @@
-<md-toolbar class="white-back semester-bar">
-    <div class="md-toolbar-tools white-back">
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Add" ng-click="ctrl2.openAddEditDialog()">
-            <md-icon><i class="fa fa-plus  ui-con"></i></md-icon>
-        </md-button>
-        <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
-            <md-icon><i class="fa fa-refresh  ui-con" ng-class="{'fa-spin': ctrl2.refreshing}"></i></md-icon>
-        </md-button>
-    </div>
-</md-toolbar>
-<md-content layout="row" class="padding semester-border-container">
-    <md-list flex="20" class="semester-list">
-        <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="sem in ctrl2.semesters">
-            <div class="md-list-item-text" ng-click="ctrl2.select(sem)">
-                <h3>{{sem.name}}</h3>
-                <p>{{sem.eid}}</p>
-            </div>
-            <md-icon ng-if="sem.eid === ctrl2.activeEid" aria-label="Active">
-                <i class="fa fa-check  ui-con green"></i>
-            </md-icon>
-        </md-list-item>
-    </md-list>
-    <md-content class="semester-display" flex="80" ng-show="ctrl2.current" style="margin-left: 10px">
-        <div class="semester-display-wrap">
-            <h1 class="semester-name">{{ctrl2.current.name}}
-                <i class="fa fa-check fa-lg ui-con" ng-if="sem.eid === ctrl2.activeEid"></i></h2>
-                <md-button class="md-icon-button" ng-click="ctrl2.openAddEditDialog(ctrl2.current)" style="bottom: 5px;">
-                    <md-icon aria-label="Edit">
-                        <i class="fa fa-pencil  ui-con"></i>
-                        <md-tooltip md-direction="top" class="large" style="position: absolute;">
-                            Edit
-                        </md-tooltip>
-                    </md-icon>
+<md-tabs style="min-height:90vh">
+    <md-tab label="Semester List">
+        <md-content layout="row" class="padding semester-border-container" style="height: 83vh; overflow: overlay;">
+            <md-list flex="20" class="semester-list">
+                <md-button class="md-icon-button" aria-label="Add" ng-click="ctrl2.openAddEditDialog()">
+                    <md-icon><i class="fa fa-plus  ui-con"></i></md-icon>
                 </md-button>
-                <md-button class="md-icon-button" ng-click="ctrl2.clone(ctrl2.current)" style="bottom: 5px;">
-                    <md-icon aria-label="Clone">
-                        <i class="fa fa-clone  ui-con"></i>
-                    </md-icon>
+                <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
+                    <md-icon><i class="fa fa-refresh  ui-con" ng-class="{'fa-spin': ctrl2.refreshing}"></i></md-icon>
                 </md-button>
-                <md-button class="md-icon-button" ng-click="ctrl2.remove(ctrl2.current)" style="bottom: 5px;">
-                    <md-icon aria-label="Delete">
-                        <i class="fa fa-trash  ui-con"></i>
+                <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-repeat="sem in ctrl2.semesters">
+                    <div class="md-list-item-text" ng-click="ctrl2.select(sem)">
+                        <h3>{{sem.name}}</h3>
+                        <p>{{sem.eid}}</p>
+                    </div>
+                    <md-icon ng-if="sem.eid === ctrl2.activeEid" aria-label="Active">
+                        <i class="fa fa-check  ui-con green"></i>
                     </md-icon>
-                </md-button>
-                <md-button class="md-icon-button" ng-click="ctrl2.setCurrent(ctrl2.current)" style="bottom: 5px;">
-                    <md-icon aria-label="Active">
-                        <i class="fa fa-check  ui-con" ng-class="{green: sem.eid === ctrl2.activeEid}"></i>
-                    </md-icon>
-                </md-button>
-                <h3 class="semester-id"><br>{{ctrl2.current.eid}}</h3>
-                <div layout="row">
-                    <md-content>
-                        <md-data-table-container class="semester-table">
-                            <table md-data-table>
-                                <thead>
-                                    <tr>
-                                        <th>Course ID</th>
-                                        <th>Name</th>
-                                        <th>Credits</th>
-                                        <th>Exam</th>
-                                        <th>CF</th>
-                                        <th>EEP</th>
-                                        <th>EM</th>
-                                        <th>GE</th>
-                                        <th>Enrollment</th>
-                                        <th>Professor 1</th>
-                                        <th>Professor 2</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="course in ctrl2.coursesBySem">
-                                        <td> {{course.cid}} </td>
-                                        <td> {{course.name}} </td>
-                                        <td> {{course.credits}} </td>
-                                        <td> {{course.exam}} </td>
-                                        <td> {{course.cf}} </td>
-                                        <td> {{course.eep}} </td>
-                                        <td> {{course.wm}} </td>
-                                        <td> {{course.ge}} </td>
-                                        <td> {{course.enrollement}} </td>
-                                        <td> {{course.professor1}} </td>
-                                        <td> {{course.professor2}} </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </md-data-table-container>
-                </div>
-        </div>
+                </md-list-item>
+            </md-list>
+            <md-content class="semester-display" flex="80" ng-show="ctrl2.current" style="margin-left: 10px">
+                <div class="semester-display-wrap">
+                    <h1 class="semester-name">{{ctrl2.current.name}}</h1>
+                    <i class="fa fa-check fa-lg ui-con" ng-if="sem.eid === ctrl2.activeEid"></i></h2>
+                    <md-button class="md-icon-button" ng-click="ctrl2.openAddEditDialog(ctrl2.current)" style="bottom: 5px;">
+                        <md-icon aria-label="Edit">
+                            <i class="fa fa-pencil  ui-con"></i>
+                            <md-tooltip md-direction="top" class="large" style="position: absolute;">
+                                Edit
+                            </md-tooltip>
+                        </md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="ctrl2.clone(ctrl2.current)" style="bottom: 5px;">
+                        <md-icon aria-label="Clone">
+                            <i class="fa fa-clone  ui-con"></i>
+                        </md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="ctrl2.remove(ctrl2.current)" style="bottom: 5px;">
+                        <md-icon aria-label="Delete">
+                            <i class="fa fa-trash  ui-con"></i>
+                        </md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="ctrl2.setCurrent(ctrl2.current)" style="bottom: 5px;">
+                        <md-icon aria-label="Active">
+                            <i class="fa fa-check  ui-con" ng-class="{green: sem.eid === ctrl2.activeEid}"></i>
+                        </md-icon>
+                    </md-button>
+                    <h3 class="semester-id"><br>{{ctrl2.current.eid}}</h3>
+                    <div layout="row">
+                        <md-content>
+                            <md-data-table-container class="semester-table">
+                                <table md-data-table>
+                                    <thead>
+                                        <tr>
+                                            <th>Course ID</th>
+                                            <th>Name</th>
+                                            <th>Credits</th>
+                                            <th>Exam</th>
+                                            <th>CF</th>
+                                            <th>EEP</th>
+                                            <th>EM</th>
+                                            <th>GE</th>
+                                            <th>Enrollment</th>
+                                            <th>Professor(s)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="course in ctrl2.coursesBySem">
+                                            <td> {{course.cid}} </td>
+                                            <td> {{course.name}} </td>
+                                            <td> {{course.credits}} </td>
+                                            <td> {{course.exam}} </td>
+                                            <td> {{course.cf}} </td>
+                                            <td> {{course.eep}} </td>
+                                            <td> {{course.wm}} </td>
+                                            <td> {{course.ge}} </td>
+                                            <td> {{course.enrollment}} </td>
+                                            <td> {{course.professors}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </md-data-table-container>
+                        </md-content>
+                    </div>
+            </md-content>
         </md-content>
-    </md-content>
+    </md-tab>
+    <md-tab label="Course List">
+        <md-content layout="row">
+            <md-content class="semester-list faculty-list" style="min-height:100vh; max-width:20%;">
+                <md-list flex="20" class="faculty-listy">
+                    <md-toolbar layout="row">
+                        <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
+                            <md-icon><i class="fa fa-refresh ui-con"></i></md-icon>
+                        </md-button>
+                    </md-toolbar>
+                    <md-list-item md-ink-ripple="#000000" class="md-2-line" ng-click="ctrl2.selectCourse(course)" ng-repeat="course in ctrl2.courses">
+                        <div class="md-list-item-text">
+                            <h3>{{course.cid}}</h3>
+                            <p>{{course.name}}</p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+            <md-content class="faculty-details" style="overflow:visible;">
+                <md-content class="faculty-info">
+                    <div class="md-title faculty-section-title">Course Info</div>
+                    <md-divider></md-divider>
+                    <div class="md-subhead">{{ctrl2.currentCourse.eid}}</div>
+                    <div class="md-subhead">{{ctrl2.currentCourseCourse.cid}} {{ctrl2.currentCourse.name}}</div>
+                    <p class="md-subhead">Professor(s): {{ctrl2.currentCourse.professors}}</p>
+                    <p class="md-subheader">Currently Enrolled: {{ctrl2.currentCourse.enrollment}}</p>
+                </md-content>
+                <div class="md-title faculty-section-title">Current Sections</div>
+                <md-divider></md-divider>
+                <md-content class="course-list" ng-repeat="courseS in ctrl2.csByCourse" layout="row">
+                    <div layout="column" style="flex:1">
+                        <div class="md-subhead">{{courseS.sid}}</div>
+                        <p class="md-subheader">Currently Enrolled: {{courseS.enrollment}}</p>
+                    </div>
+                    <div layout="column" style="flex:1">
+                        <p class="md-subheader">{{ctrl2.getTAInfo(courseS.TAs)[0]}} , {{ctrl2.getTAInfo(courseS.TAs)[1]}}</p>
+                    </div>
+                </md-content>
+            </md-content>
+        </md-content>
+    </md-tab>
+</md-tabs>

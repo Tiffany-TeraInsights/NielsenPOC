@@ -75,6 +75,19 @@ res.status(400).send(err);
 
 }
 
+export function removeUser(req: express.Request,res: express.Response) {
+var email=req.body.email;
+
+
+console.log("removeUser "+email);
+
+Users.unregister(email).then(() => {
+res.status(200).send("OK");
+},(err) => {
+res.status(404).send(err);
+});
+}
+
 export function addStudentProfile(req: express.Request,res: express.Response) {
 var email=req.body.email;
 var studentType=req.body.studentType;
@@ -84,8 +97,9 @@ var testScores=req.body.testScores;
 var courseList=req.body.courseList;
 var degrees=req.body.degrees;
 var pastTAships=req.body.pastTAships;
+var extra=req.body.extra;
 
-StudentProfiles.addStudentProfile(email,studentType,FSS,GPA,testScores,courseList,degrees,pastTAships)
+StudentProfiles.addStudentProfile(email,studentType,FSS,GPA,testScores,courseList,degrees,pastTAships,extra)
 .then((studentProfile) => {
 res.json(studentProfile);
 },(err) => {
@@ -103,8 +117,9 @@ var testScores=req.body.testScores;
 var courseList=req.body.courseList;
 var degrees=req.body.degrees;
 var pastTAships=req.body.pastTAships;
+var extra=req.body.extra;
 
-StudentProfiles.update(email,studentType,FSS,GPA,testScores,courseList,degrees,pastTAships)
+StudentProfiles.update(email,studentType,FSS,GPA,testScores,courseList,degrees,pastTAships,extra)
 .then((studentProfile) => {
 res.json(studentProfile);
 },(err) => {
@@ -121,31 +136,21 @@ res.status(404).send(err);
 });
 }
 
-export function updateFaculty(req: express.Request,res: express.Response) {
-var userID=req.params.userID;
-var faculty=req.body;
-User.findOne({
-_id: userID
-},(err,user) => {
-if(err)
-res.status(400).send(err);
-else {
-user.firstName=faculty.firstName||user.firstName;
-user.lastName=faculty.lastName||user.lastName;
-user.nickName=faculty.nickName||user.nickName;
-user.email=faculty.email||user.email;
-user.pubKey=faculty.pubKey||user.pubKey;
-
-user.save((err,user2) => {
-if(err)
-res.status(400).send(err);
-else
+export function updateUser(req: express.Request,res: express.Response) {
+Users.update(
+req.body.firstName,
+req.body.lastName,
+req.body.email,
+req.body.password,
+req.body.roles,
+req.body.cid
+).then((user) => {
 res.json(user);
-});
+},(err) => {
+res.status(300).send(err);
+})
 }
 
-});
-}
 /** 
  * Method for signing in admins and faculty
  */
@@ -189,7 +194,10 @@ message: 'User is not authorized'
 export function isAuthorized(req: express.Request,res: express.Response,next: Function) {
 if(req.user&&
 (_.includes(req.user.roles,'admin')||
-_.includes(req.user.roles,'faculty'))) {
+_.includes(req.user.roles,'faculty')||
+_.includes(req.user.roles,'professor')||
+_.includes(req.user.roles,'advisor')||
+_.includes(req.user.roles,'hr'))) {
 next();
 } else {
 res.status(403).json({

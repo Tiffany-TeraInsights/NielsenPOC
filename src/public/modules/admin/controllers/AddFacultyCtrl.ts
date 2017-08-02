@@ -7,12 +7,21 @@ export class AddFacultyCtrl {
 private newFaculty: core.IUser;
 private csvSlot: number=0;
 
+private selectedType: string="";
+
+public facultyRoles=[
+{ type: "professor",name: "Professor" },
+{ type: "advisor",name: "Advisor" },
+{ type: "hr",name: "Human Resource" },
+{ type: "admin",name: "Administrator" }
+]
+
 addFaculty(csvs: number) {
 this.newFaculty.firstName=this.bulkData[csvs][0];
 this.newFaculty.lastName=this.bulkData[csvs][1];
 this.newFaculty.email=this.bulkData[csvs][2];
 this.newFaculty.password=this.bulkData[csvs][3];
-this.newFaculty.roles='faculty';
+this.newFaculty.roles=this.selectedType;
 this.newFaculty.cid=null;
 this.Users.add(this.newFaculty)
 .then(() => {

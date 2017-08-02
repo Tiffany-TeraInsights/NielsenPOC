@@ -1,0 +1,144 @@
+<md-sidenav class="md-whiteframe-z1 md-open student-sn" md-component-id='left' md-is-locked-open="true">
+    <md-toolbar class="md-tall">
+        <span flex></span>
+        <div layout="row" class="md-toolbar-tools-bottom inset">
+            <div layout="column">
+                <div class="md-title">{{ctrl2.user.firstName}} {{ctrl2.user.lastName}}</div>
+                <div class="md-subhead">{{ctrl2.user.email}}</div>
+            </div>
+        </div>
+    </md-toolbar>
+    <md-content class="fake-menu">
+        <div layout="row">
+            <md-subheader class="md-no-sticky">Current Courses for {{ctrl2.currentSemester.name}}</md-subheader>
+            <md-button class="md-icon-button" aria-label="Refresh" ng-click="ctrl2.refresh()">
+                <md-icon><i class="fa fa-refresh  ui-con"></i></md-icon>
+            </md-button>
+        </div>
+        <md-menu-divider></md-menu-divider>
+        <md-content ng-repeat="courses in ctrl2.coursesForSemester">
+            <md-menu-item style="min-height: 80px;">
+                <md-button class="md-list-item-text" ng-click="ctrl2.select(courses)">
+                    <h5>{{courses.cid}}</h5>
+                    <p>{{courses.name}}</p>
+                </md-button>
+            </md-menu-item>
+        </md-content>
+    </md-content>
+</md-sidenav>
+
+<md-tabs style="min-width:80vw;">
+    <md-tab label="Current Semester">
+        <md-content class="faculty-details" style="overflow:visible;">
+            <md-content class="faculty-info" style="overflow:visible;">
+                <div class="md-title faculty-section-title">Course Info</div>
+                <md-divider></md-divider>
+                <div class="md-subhead">{{ctrl2.selectedCourse.eid}}</div>
+                <div class="md-subhead">{{ctrl2.selectedCourse.cid}} {{ctrl2.selectedCourse.name}}</div>
+                <p class="md-subheader">Currently Enrolled: {{ctrl2.selectedCourse.enrollment}}</p>
+            </md-content>
+            <br>
+            <div class="md-title faculty-section-title">Current Sections</div>
+            <md-divider></md-divider>
+            <md-content class="course-list" ng-repeat="courseS in ctrl2.sections" layout="row">
+                <div layout="column" style="flex:1">
+                    <div class="md-subhead">{{courseS.sid}}</div>
+                    <p class="md-subheader">Currently Enrolled: {{courseS.enrollment}}</p>
+                </div>
+                <div>
+
+                </div>
+                <md-list style="flex:1">
+                    <md-list-item class="md-2-line contact-item" ng-repeat="ta in ctrl2.TAList[courseS.sid]" ng-if="ta[0] != '' ">
+                        <div class="md-list-item-text compact">
+                            <h3>{{ta[0]}}</h3>
+                            <p>{{ta[1]}}</p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+            <br>
+            <md-divider></md-divider>
+            <br>
+            <div class="md-title faculty-section-title">Applications</div>
+            <md-content layout="row" style="flex-wrap:wrap; overflow:visible;">
+                <md-tabs style="min-width:100%;">
+                    <md-tab label="Card View" style="overflow: visible;">
+                        <md-card class="course-list" ng-repeat="app in ctrl2.recByCourse" ng-if="app.approved == ''" style="max-width:40%;" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-title">{{ctrl2.getUserName(app)}}</span>
+                                    <span class="md-subhead">Requested Section: {{app.sid}}</span>
+                                    <span class="md-subhead">{{app.taType}}</span>
+                                    <span class="md-subhead">{{ctrl2.getUserType(app)}}</span>
+                                    <span ng-if="ctrl2.hasTakenCourse(app) == true" class="md-body-1">Taken Course <i style="color:green"="fa fa-check"></i></span>
+                                    <span ng-if="ctrl2.hasTakenCourse(app) == false" class="md-body-1">Taken Course <i style="color:red"class="fa fa-times"></i></span>
+                                    <span ng-if="ctrl2.getRecommended(app) != []" class="md-body-1">Recommended For:
+                                            <span ng-repeat="app in ctrl2.getRecommended(app)" layout="column" style="color:#1de9b6">{{app.cid}}</span>
+                                    </span>
+                                    <span ng-if="ctrl2.getAssigned(app) != []" class="md-body-1">Assigned To:
+                                            <span ng-repeat="app in ctrl2.getAssigned(app)" layout="column" style="color:#cddc39">{{app.cid}}</span>
+                                    </span>
+                                </md-card-title-text>
+                                <md-card-actions layout="row" style="margin:inherit">
+                                    <md-button class="md-icon-button" aria-label="Favorite" ng-click="ctrl2.openStudentProfile(app)">
+                                        <i class="fa fa-list"></i>
+                                        <md-tooltip md-direction="top">View Student Profile</md-tooltip>
+                                    </md-button>
+                                </md-card-actions>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button ng-if="app.faculty == '' " ng-click="ctrl2.recommend(app)">Recommend</md-button>
+                                <md-button ng-if="app.faculty != '' " ng-click="ctrl2.unRecommend(app)">Unrecommend</md-button>
+                                <md-button>Reject</md-button>
+                            </md-card-actions>
+                        </md-card>
+                    </md-tab>
+                    <md-tab label="List View">
+                        <md-content class="course-list">
+                            <md-data-table-container class="semester-table" class="faculty-info">
+                                <table md-table>
+                                    <thead md-head>
+                                        <th>Student</th>
+                                        <th>Student Type</th>
+                                        <th>GPA</th>
+                                        <th>Taken Course</th>
+                                        <th>Requested Session</th>
+                                        <th>Actions</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="app in ctrl2.recByCourse" ng-if="app.approved == ''" class="md-list-item-text">
+                                            <td>{{ctrl2.getUserName(app)}}</td>
+                                            <td>{{ctrl2.getUserType(app)}}</td>
+                                            <td>{{ctrl2.getUserGPA(app)}}</td>
+                                            <td>
+                                                <div ng-if="ctrl2.hasTakenCourse(app) == true"><i class="fa fa-check"></i></div>
+                                                <div ng-if="ctrl2.hasTakenCourse(app) != true"><i class="fa fa-times"></i></div>
+                                            </td>
+                                            <td>{{app.sid}}</td>
+                                            <td>
+                                                <div layout="row">
+                                                    <md-button class="md-icon-button" aria-label="Favorite" ng-click="ctrl2.recommend()">
+                                                        <i class="fa fa-list"></i>
+                                                        <md-tooltip md-direction="top">View Student Profile</md-tooltip>
+                                                    </md-button>
+                                                    <md-button class="md-icon-button" aria-label="Favorite" ng-click="ctrl2.recommend()">
+                                                        <i class="fa fa-plus"></i>
+                                                        <md-tooltip md-direction="top">Recommend</md-tooltip>
+                                                    </md-button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </md-data-table-container>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+    </md-tab>
+    </md-content>
+    <md-tab label="Previous Semesters">
+
+    </md-tab>
+</md-tabs>

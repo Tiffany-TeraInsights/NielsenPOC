@@ -8,5 +8,7 @@ var faculty=angular.module('GatorTA',[
 'ngAria','ngMaterial','ngSanitize','ngResource',
 'ngFileUpload','md.data.table','ngMdIcons','pdf'])
 
-
+.controller("FacultyCtrl",FacultyCtrl)
+.controller("ProfessorCtrl",ProfessorCtrl)
+.controller("StudentDetailCtrl",StudentDetailCtrl)
 }

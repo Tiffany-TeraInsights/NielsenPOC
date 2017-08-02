@@ -1,8 +1,10 @@
 module core {
 
 export interface ICourseSection extends ng.resource.IResource<ICourseSection> {
+id: string;
 sid: string
 cid: string; // course id
+cName: string;
 eid: string;
 BRPD: string;
 enrollment: number;
@@ -56,7 +58,7 @@ return defer.promise;
 
 updateCourseSection(courseS: ICourseSection) {
 let defer=this.$q.defer();
-this.resource.update({ id: courseS.cid },courseS,
+this.resource.update({ id: courseS.id },courseS,
 (course: ICourseSection) => { defer.resolve(course); },
 (err) => { defer.reject(err); });
 return defer.promise;
@@ -80,6 +82,13 @@ getCourseSections(course: core.ICourse) {
 return this.list.filter((courseS) => {
 return ((courseS.cid)==course.cid);
 });
+}
+
+getSectionsForSemester(eid: string) {
+return this.list.filter((courseS) => {
+return ((courseS.eid)==eid);
+});
+
 }
 
 refresh() {

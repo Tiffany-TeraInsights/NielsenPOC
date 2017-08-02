@@ -88,9 +88,14 @@ function csvFileReader(file, callback) {
         for (var i = 1; i < allTextLines.length; i++) {
             var data = allTextLines[i].split(',');
             if (data.length == headings.length) {
-
                 var tarr = [];
                 for (var j = 0; j < headings.length; j++) {
+                    tarr.push(data[j]);
+                }
+                lines.push(tarr);
+            } else if (data.length == 15) {
+                var tarr = [];
+                for (var j = 0; j < 15; j++) {
                     tarr.push(data[j]);
                 }
                 lines.push(tarr);

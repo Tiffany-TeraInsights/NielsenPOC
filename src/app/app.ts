@@ -10,7 +10,6 @@ import * as config from 'config';
 
 import * as staticRoutes from './routes/static';
 import * as authRoutes from './routes/auth';
-import * as todosRoutes from './routes/todos';
 import * as semesterRoutes from './routes/semester';
 import * as userRoutes from './routes/users';
 
@@ -79,23 +78,21 @@ app.route('/register').post(authRoutes.register);
 
 app.route('/loginAdmin').post(passport.authenticate('local',{ session: true }),authRoutes.loginAdmin);
 app.route('/loginStudent').post(passport.authenticate('local',{ session: true }),authRoutes.loginStudent);
+app.route('/loginFaculty').post(passport.authenticate('local',{ session: true }),authRoutes.loginFaculty);
 app.route('/logout').get(primaryFactorIn,authRoutes.logout);
 
 
 // Todos CRUD routes. Require full session
-app.route('/todo').get(primaryFactorIn,todosRoutes.get); // all of user's todos
-app.route('/todo').post(primaryFactorIn,todosRoutes.create);
 app.route('/adminMain').get(primaryFactorIn,authRoutes.confirmAdmin,semesterRoutes.get);
-app.route('/todo/:id').put(primaryFactorIn,todosRoutes.update);
-app.route('/todo/:id').delete(primaryFactorIn,todosRoutes.remove);
 
 app.route('/users').get(userRoutes.isAuthorized,userRoutes.list);
 app.route('/users').post(userRoutes.isAdmin,userRoutes.addUser);
-app.route('/users/:userID').put(userRoutes.isAdmin,userRoutes.updateFaculty);
+app.route('/users/:id').put(userRoutes.isAdmin,userRoutes.updateUser);
+app.route('/users/:id').delete(userRoutes.isAdmin,userRoutes.removeUser);
 
 //app.param('id',semesterRoutes.semesterByID);
 //app.route('/semesters').get();
-app.route('/semesters').get(userRoutes.isAdmin,semesterRoutes.list);
+app.route('/semesters').get(semesterRoutes.list);
 app.route('/semesters').post(userRoutes.isAdmin,semesterRoutes.create);
 
 app.route('/semesters/:id').put(userRoutes.isAdmin,semesterRoutes.update);
@@ -105,12 +102,17 @@ app.route('/courses').get(semesterRoutes.listCourses);
 app.route('/courses/:id').put(userRoutes.isAdmin,semesterRoutes.updateCourse);
 
 app.route('/courseSections').post(userRoutes.isAdmin,semesterRoutes.createCourseSection);
-app.route('/courseSections').get(userRoutes.isAdmin,semesterRoutes.listCourseSections);
+app.route('/courseSections').get(semesterRoutes.listCourseSections);
 app.route('/courseSections/:id').put(userRoutes.isAdmin,semesterRoutes.updateCourseSection);
 
 app.route('/studentprofiles').post(userRoutes.addStudentProfile);
 app.route('/studentprofiles').get(userRoutes.listStudentProfile);
 app.route('/studentprofiles/:id').put(userRoutes.updateStudentProfile);
+
+app.route('/recommendations').post(semesterRoutes.addRecommendation);
+app.route('/recommendations').get(semesterRoutes.listRecommendations);
+app.route('/recommendations/:id').put(semesterRoutes.updateRecommendation);
+app.route('/recommendations/:id').delete(semesterRoutes.removeRecommendation);
 
 //app.route('/studentprofiles').post(userRoutes.addStudentProfile);
 // This is critical. Without it, the schema is not created

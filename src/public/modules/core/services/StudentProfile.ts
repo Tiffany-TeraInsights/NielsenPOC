@@ -62,6 +62,10 @@ defer.resolve(up); undefined},
 return defer.promise;
 }
 
+getAll() {
+return this.list;
+}
+
 getUserProfile(user: core.IUser) {
 return this.list.filter((userP) => {
 return (user.email==userP.email);

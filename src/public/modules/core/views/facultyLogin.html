@@ -1,0 +1,24 @@
+<!-- Signup -->
+<div class="login-wrapper" style="min-height:100%; margin:auto;">
+    <p class="message">Login to an existing account.</p>
+    <form class="login" novalidate name="loginForm" ng-model="loginForm">
+        <!-- Line 1 -->
+        <div class="row">
+            <div class="input-field">
+                <input type="text" ng-model="username" id="username" name="username" required>
+                <label for="username">Username</label>
+            </div>
+        </div>
+        <!-- Line 2 -->
+        <div class="row">
+            <div class="input-field">
+                <input type="password" ng-model="password" id="password" name="password" required ng-maxlength="16">
+                <label for="password">Password</label>
+            </div>
+        </div>
+        <div>
+            <a class="waves-effect waves-light btn" type="submit" ng-disabled="loginForm.$invalid" ng-click="lCtrl.loginFaculty(username, password)">Login</a>
+            <a class="waves-effect waves-light red btn" ui-sref="register">Cancel</a>
+        </div>
+    </form>
+</div>

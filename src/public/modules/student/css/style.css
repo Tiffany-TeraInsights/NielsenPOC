@@ -12,8 +12,9 @@
 }
 
 .student-switch-tainer {
-    height: 93vh;
+    height: 100vh;
     width: 78vw;
+    overflow: scroll;
 }
 
 .student-profile {
@@ -42,4 +43,9 @@
 
 .basic-info-dropdown {
     margin: inherit;
+}
+
+.student-info-content {
+    max-width: 70%;
+    margin: 7%;
 }

@@ -35,10 +35,12 @@ eid: eid
 });
 }
 
-addCourseSection(sid: string,cid: string,eid: string,BRPD: string,enrollment: number,TAs: string) {
+addCourseSection(id: string,sid: string,cid: string,cName: string,eid: string,BRPD: string,enrollment: number,TAs: string) {
 return this.schema.create({
+id: id,
 sid: sid,
 cid: cid,
+cName: cName,
 eid: eid,
 BRPD: BRPD,
 enrollment: enrollment,
@@ -54,27 +56,34 @@ sid: sid}
 });
 }
 
-updateCourseSection(sid: string,cid: string,eid: string,BRPD: string,enrollment: number,TAs: string) {
+updateCourseSection(id: string,sid: string,cid: string,cName: string,eid: string,BRPD: string,enrollment: number,TAs: string) {
 return this.schema.update({
+id: id,
 sid: sid,
 cid: cid,
+cName: cName,
 eid: eid,
 BRPD: BRPD,
 enrollment: enrollment,
 TAs: TAs
 },{
 where: {
-cid: cid,
+id: id
 },
-fields: ['completed']
 }).then((res) => {
-return this.schema.findById(sid);
+console.log(this.schema.findById(id));
+return this.schema.findById(id);
 });
 }
 
 
 constructor(private db: Sequelize.Connection) {
 this.schema=db.define<ICourseSection.ICourseSectionInstance,ICourseSection.ICourseSection>("CourseSection",{
+"id": {
+"type": Sequelize.UUID,
+"allowNull": false,
+"primaryKey": true
+},
 "sid": {
 "type": Sequelize.UUID,
 "allowNull": false,
@@ -84,6 +93,10 @@ this.schema=db.define<ICourseSection.ICourseSectionInstance,ICourseSection.ICour
 "type": Sequelize.UUID,
 "allowNull": false,
 "primaryKey": false
+},
+"cName": {
+"type": Sequelize.STRING(64),
+"allowNull": false
 },
 'eid': {
 "type": Sequelize.STRING(64),
